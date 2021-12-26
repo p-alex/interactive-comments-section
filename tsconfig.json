@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist/js",
+    "module": "commonjs",
+    "strict": true,
+    "lib": ["es6", "DOM"]
+  }
+}
