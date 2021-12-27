@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { createCommentElement } from "./commentBox.js";
 const mainContainer = document.querySelector(".container");
 const getData = () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield fetch("../dist/data.json");
+    const response = yield fetch("/dist/data.json");
     const json = yield response.json();
     return json;
 });

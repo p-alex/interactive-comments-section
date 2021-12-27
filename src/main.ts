@@ -8,7 +8,7 @@ import {
 const mainContainer = document.querySelector(".container") as any;
 
 const getData = async () => {
-  const response = await fetch("../dist/data.json");
+  const response = await fetch("/dist/data.json");
   const json = await response.json();
   return json;
 };
