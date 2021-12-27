@@ -1,0 +1,124 @@
+.commentBox__container {
+  position: relative;
+  width: 100%;
+}
+.commentBox {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  border-radius: 10px;
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 20px;
+}
+.commentBox__rate {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: hsl(223, 19%, 93%);
+  border-radius: 10px;
+  margin-right: 25px;
+}
+.commentBox__rateBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+.commentBox__likes {
+  font-weight: 500;
+  color: hsl(238, 40%, 52%);
+  margin: 5px 0;
+}
+.commentBox__body {
+  position: relative;
+}
+.commentBox__topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.commentBox__userDetails {
+  display: flex;
+  align-items: center;
+}
+.commentBox__usernameAndDate {
+  display: flex;
+  margin: 0 20px;
+}
+.commentBox__profilePicture {
+}
+.commentBox__username {
+  font-weight: 700;
+  color: hsl(212, 24%, 26%);
+}
+.commentBox__commentDate {
+  color: hsl(211, 10%, 45%);
+  margin-left: 20px;
+}
+.commentBox__btns {
+  position: relative;
+  display: flex;
+}
+.commentBox__btn {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: hsl(238, 40%, 52%);
+  padding: 10px;
+}
+.commentBox__btn.delete-btn {
+  color: hsl(358, 79%, 66%);
+}
+.commentBox__btn span {
+  margin-left: 10px;
+}
+.commentBox__text {
+  position: relative;
+  margin-top: 15px;
+}
+.commentBox__mention {
+  color: hsl(238, 40%, 52%);
+  font-weight: 700;
+}
+.commentBox__text p {
+  color: hsl(211, 10%, 45%);
+  line-height: 25px;
+}
+.commentBox__replyContainer {
+  position: relative;
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.commentBox__replyContainer .commentBox__container:last-child .commentBox {
+  margin-bottom: 0;
+}
+.commentBox__helperLine {
+  position: relative;
+  width: 5px;
+  background-color: #e8e9ed;
+  margin: 0 40px;
+}
+@media screen and (max-width: 700px) {
+  .commentBox__helperLine {
+    margin: 0;
+    margin-right: 20px;
+    width: 5px;
+  }
+  .commentBox__usernameAndDate {
+    flex-direction: column;
+  }
+  .commentBox__commentDate {
+    color: hsl(211, 10%, 45%);
+    margin-left: 0px;
+    font-size: 0.85rem;
+    margin-top: 3px;
+  }
+  .commentBox__btn span {
+    margin-left: 10px;
+    display: none;
+  }
+}

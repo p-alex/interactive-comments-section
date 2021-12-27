@@ -1,0 +1,33 @@
+.form {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+.form__text {
+  width: 100%;
+  min-height: 100px;
+  border: solid #e8e9ed 1px;
+  margin: 0 20px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  resize: vertical;
+}
+.form__submitBtn {
+  padding: 12px 25px;
+  border-radius: 5px;
+  color: white;
+  text-transform: uppercase;
+  background-color: hsl(238, 40%, 52%);
+}
+@media screen and (max-width: 700px) {
+  .form {
+    flex-direction: column;
+  }
+  .form__text {
+    margin: 20px 0;
+  }
+}

@@ -1,9 +1,14 @@
 {
+  "settings": {
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"]
+  },
   "compilerOptions": {
+    "target": "es6",
     "rootDir": "./src",
     "outDir": "./dist/js",
-    "module": "commonjs",
+    "module": "es6",
     "strict": true,
     "lib": ["es6", "DOM"]
-  }
+  },
+  "exclude": ["./src/interfaces/index.ts"]
 }

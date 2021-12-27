@@ -1,0 +1,13 @@
+.footer {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 50px;
+}
+.footer p {
+  color: #909195;
+}
+.footer a {
+  color: hsl(238, 40%, 52%);
+  font-weight: 500;
+}
