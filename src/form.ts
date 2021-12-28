@@ -1,5 +1,5 @@
 import { createCommentElement } from "./commentBox.js";
-import { currentUser, mainContainer } from "./main.js";
+import { data, mainContainer } from "./main.js";
 
 const formContainer = document.querySelector(
   ".form__container"
@@ -33,12 +33,12 @@ const addNewComment = (content: string): void => {
   if (content) {
     const comment = createCommentElement(
       0,
-      currentUser.image.png,
-      currentUser.username,
+      data.currentUser.image.png,
+      data.currentUser.username,
       new Date().toLocaleDateString(),
       content,
       [],
-      currentUser
+      data.currentUser
     );
     mainContainer.appendChild(comment);
 

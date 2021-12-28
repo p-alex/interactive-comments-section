@@ -1,5 +1,5 @@
 import { createCommentElement } from "./commentBox.js";
-import { currentUser, mainContainer } from "./main.js";
+import { data, mainContainer } from "./main.js";
 const formContainer = document.querySelector(".form__container");
 export const appendForm = () => {
     const form = document.createElement("div");
@@ -18,7 +18,7 @@ export const appendForm = () => {
 };
 const addNewComment = (content) => {
     if (content) {
-        const comment = createCommentElement(0, currentUser.image.png, currentUser.username, new Date().toLocaleDateString(), content, [], currentUser);
+        const comment = createCommentElement(0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), content, [], data.currentUser);
         mainContainer.appendChild(comment);
         // Reset text area
         const formTextArea = formContainer.querySelector(".form__text");

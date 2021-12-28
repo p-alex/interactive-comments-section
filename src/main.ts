@@ -11,42 +11,51 @@ export const mainContainer = document.querySelector(
   ".container"
 ) as HTMLDivElement;
 
-// Getting data from data.json
-const getData = async (): Promise<dataInterface> => {
-  const response = await fetch("data.json");
-  const json = await response.json();
-  return json;
-};
+export let data: dataInterface;
 
-export let currentUser: userInterface;
+// Getting data from data.json
+const getData = async (): Promise<void> => {
+  try {
+    const response = await fetch("data.json");
+    const json: dataInterface = await response.json();
+    data = json;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 const main = async (): Promise<void> => {
-  const data: dataInterface = await getData();
-  const { comments } = data;
-  currentUser = data.currentUser;
-
-  const appendComments = (
-    comments: commentsInterface[],
-    currentUser: userInterface
-  ) => {
-    comments.forEach((comment: commentsInterface): void => {
-      mainContainer.appendChild(
-        createCommentElement(
-          comment.score,
-          comment.user.image.png,
-          comment.user.username,
-          comment.createdAt,
-          comment.content,
-          comment.replies,
-          currentUser
-        )
-      );
-    });
-  };
-
-  appendComments(comments, currentUser);
-  appendForm();
-  appendFooter();
+  if (data?.currentUser?.username) {
+    appendComments(data.comments, data.currentUser);
+    appendForm();
+    appendFooter();
+  } else {
+    const error = document.createElement("p") as HTMLParagraphElement;
+    error.innerText = "Something went wrong...";
+    mainContainer.appendChild(error);
+  }
 };
 
-main();
+const appendComments = (
+  comments: commentsInterface[],
+  currentUser: userInterface
+) => {
+  comments.forEach((comment: commentsInterface): void => {
+    mainContainer.appendChild(
+      createCommentElement(
+        comment.score,
+        comment.user.image.png,
+        comment.user.username,
+        comment.createdAt,
+        comment.content,
+        comment.replies,
+        currentUser
+      )
+    );
+  });
+};
+
+(async () => {
+  await getData();
+  await main();
+})();

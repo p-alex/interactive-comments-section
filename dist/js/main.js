@@ -11,24 +11,37 @@ import { createCommentElement } from "./commentBox.js";
 import { appendFooter } from "./footer.js";
 import { appendForm } from "./form.js";
 export const mainContainer = document.querySelector(".container");
+export let data;
 // Getting data from data.json
 const getData = () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield fetch("data.json");
-    const json = yield response.json();
-    return json;
+    try {
+        const response = yield fetch("data.json");
+        const json = yield response.json();
+        data = json;
+    }
+    catch (err) {
+        console.error(err);
+    }
 });
-export let currentUser;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield getData();
-    const { comments } = data;
-    currentUser = data.currentUser;
-    const appendComments = (comments, currentUser) => {
-        comments.forEach((comment) => {
-            mainContainer.appendChild(createCommentElement(comment.score, comment.user.image.png, comment.user.username, comment.createdAt, comment.content, comment.replies, currentUser));
-        });
-    };
-    appendComments(comments, currentUser);
-    appendForm();
-    appendFooter();
+    var _a;
+    if ((_a = data === null || data === void 0 ? void 0 : data.currentUser) === null || _a === void 0 ? void 0 : _a.username) {
+        appendComments(data.comments, data.currentUser);
+        appendForm();
+        appendFooter();
+    }
+    else {
+        const error = document.createElement("p");
+        error.innerText = "Something went wrong...";
+        mainContainer.appendChild(error);
+    }
 });
-main();
+const appendComments = (comments, currentUser) => {
+    comments.forEach((comment) => {
+        mainContainer.appendChild(createCommentElement(comment.score, comment.user.image.png, comment.user.username, comment.createdAt, comment.content, comment.replies, currentUser));
+    });
+};
+(() => __awaiter(void 0, void 0, void 0, function* () {
+    yield getData();
+    yield main();
+}))();
