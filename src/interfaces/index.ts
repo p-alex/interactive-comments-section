@@ -28,3 +28,7 @@ export interface replyInterface {
   score: number;
   user: userInterface;
 }
+export interface createButtonInterface {
+  btnType: "normal" | "delete";
+  text: string;
+}
