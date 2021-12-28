@@ -1,7 +1,7 @@
 import { replyInterface, userInterface } from "./interfaces/index";
 
 export const createCommentElement = (
-  likes: number,
+  score: number,
   userImage: string,
   username: string,
   createdAt: string,
@@ -17,7 +17,7 @@ export const createCommentElement = (
           <button class="commentBox__rateBtn" aria-label="Like comment">
             <img src="./images/icon-plus.svg" alt="" width='10' height='10'/>
           </button>
-          <p class="commentBox__likes">${likes}</p>
+          <p class="commentBox__likes">${score}</p>
           <button class="commentBox__rateBtn" aria-label="Dislike comment">
             <img src="./images/icon-minus.svg" alt="" width='10' height='3' />
           </button>
@@ -50,7 +50,9 @@ export const createCommentElement = (
   container.innerHTML = template;
 
   // Adding Reply, Delete, and Edit buttons based on currentUser
-  const commentBoxBtns = container.querySelector(".commentBox__btns");
+  const commentBoxBtns = container.querySelector(
+    ".commentBox__btns"
+  ) as HTMLDivElement;
   if (currentUser.username === username) {
     commentBoxBtns!.appendChild(createButton("Delete"));
     commentBoxBtns!.appendChild(createButton("Edit"));
@@ -66,7 +68,7 @@ export const createCommentElement = (
     const repliesContainer = container.querySelector(
       ".commentBox__replyCommentsContainer"
     ) as HTMLDivElement;
-    replies.forEach((reply) => {
+    replies.forEach((reply: replyInterface): void => {
       repliesContainer.appendChild(
         createCommentElement(
           reply.score,
@@ -87,7 +89,7 @@ export const createCommentElement = (
 const deleteComment = (event: Event): void => {
   const element = <Element>event.target;
   const parent = <HTMLDivElement>(
-    element.parentNode!.parentNode!.parentNode!.parentNode!.parentNode!
+    element.parentNode!.parentNode!.parentNode!.parentNode!.parentNode! // LOL
   );
   parent.remove();
 };
@@ -100,7 +102,7 @@ const replyToComment = (): void => {
   console.log("reply");
 };
 
-const createButton = (text: "Reply" | "Delete" | "Edit"): Element => {
+const createButton = (text: "Reply" | "Delete" | "Edit"): HTMLButtonElement => {
   const button = document.createElement("button") as HTMLButtonElement;
   button.classList.add("commentBox__btn");
   if (text === "Delete") button.classList.add("delete-btn");

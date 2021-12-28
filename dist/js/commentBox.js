@@ -1,4 +1,4 @@
-export const createCommentElement = (likes, userImage, username, createdAt, content, replies, currentUser) => {
+export const createCommentElement = (score, userImage, username, createdAt, content, replies, currentUser) => {
     const container = document.createElement("div");
     container.classList.add("commentBox__container");
     const template = `
@@ -7,7 +7,7 @@ export const createCommentElement = (likes, userImage, username, createdAt, cont
           <button class="commentBox__rateBtn" aria-label="Like comment">
             <img src="./images/icon-plus.svg" alt="" width='10' height='10'/>
           </button>
-          <p class="commentBox__likes">${likes}</p>
+          <p class="commentBox__likes">${score}</p>
           <button class="commentBox__rateBtn" aria-label="Dislike comment">
             <img src="./images/icon-minus.svg" alt="" width='10' height='3' />
           </button>
@@ -57,7 +57,8 @@ export const createCommentElement = (likes, userImage, username, createdAt, cont
 };
 const deleteComment = (event) => {
     const element = event.target;
-    const parent = (element.parentNode.parentNode.parentNode.parentNode.parentNode);
+    const parent = (element.parentNode.parentNode.parentNode.parentNode.parentNode // LOL
+    );
     parent.remove();
 };
 const editComment = () => {
