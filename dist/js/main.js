@@ -11,6 +11,7 @@ import { createCommentElement } from "./commentBox.js";
 import { appendFooter } from "./footer.js";
 import { appendForm } from "./form.js";
 export const mainContainer = document.querySelector(".container");
+export const mainForm = document.querySelector(".form__container");
 export let data;
 // Getting data from data.json
 const getData = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,7 +28,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     if ((_a = data === null || data === void 0 ? void 0 : data.currentUser) === null || _a === void 0 ? void 0 : _a.username) {
         appendComments(data.comments, data.currentUser);
-        appendForm();
+        appendForm({ appendToElement: mainForm });
         appendFooter();
     }
     else {

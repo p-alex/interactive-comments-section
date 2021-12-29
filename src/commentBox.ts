@@ -1,3 +1,4 @@
+import { appendForm } from "./form.js";
 import { replyInterface, userInterface } from "./interfaces/index";
 
 export const createCommentElement = (
@@ -39,6 +40,7 @@ export const createCommentElement = (
           </div>
       </div>
     </div>
+    <div class="commentBox__replyFormContainer"></div>
     <div class="commentBox__replyContainer" ${
       replies.length === 0 ? 'style="margin:0"' : ""
     }>
@@ -54,10 +56,16 @@ export const createCommentElement = (
     ".commentBox__btns"
   ) as HTMLDivElement;
   if (currentUser.username === username) {
-    commentBoxBtns!.appendChild(createButton("Delete"));
-    commentBoxBtns!.appendChild(createButton("Edit"));
+    commentBoxBtns!.appendChild(
+      createButton({ text: "Delete", withIcon: true, btnStyle: "normal" })
+    );
+    commentBoxBtns!.appendChild(
+      createButton({ text: "Edit", withIcon: true, btnStyle: "normal" })
+    );
   } else {
-    commentBoxBtns!.appendChild(createButton("Reply"));
+    commentBoxBtns!.appendChild(
+      createButton({ text: "Reply", withIcon: true, btnStyle: "normal" })
+    );
   }
 
   // Adding comment text using textContent for security
@@ -89,30 +97,130 @@ export const createCommentElement = (
 const deleteComment = (event: Event): void => {
   const element = <Element>event.target;
   const parent = <HTMLDivElement>(
-    element.parentNode!.parentNode!.parentNode!.parentNode!.parentNode! // LOL
+    element!.parentElement!.parentElement!.parentElement!.parentElement!.parentElement!.closest(
+      ".commentBox__container"
+    )
   );
   parent.remove();
 };
 
-const editComment = (): void => {
-  console.log("edit");
+const editComment = (event: Event): void => {
+  const element = <Element>event.target;
+  const commentContainer: HTMLElement =
+    element!.parentElement!.parentElement!.parentElement!.parentElement!.parentElement!.closest(
+      ".commentBox__container"
+    )!;
+
+  const commentTextContainer = commentContainer!.querySelector(
+    ".commentBox__text"
+  ) as HTMLDivElement;
+
+  //Hide comment text
+  const commentText: HTMLParagraphElement =
+    commentTextContainer.querySelector("#comment-text")!;
+  commentText.style.display = "none";
+
+  const isTextarea = commentContainer.querySelector(
+    ".commentBox__textarea"
+  ) as HTMLTextAreaElement;
+  if (!isTextarea) {
+    const textarea = document.createElement("textarea") as HTMLTextAreaElement;
+    textarea.classList.add("commentBox__textarea");
+    textarea.placeholder = "Edit your comment...";
+    textarea.value = commentText.textContent!;
+    commentTextContainer.appendChild(textarea);
+  }
+
+  const isEditModeBtns = commentContainer.querySelector(
+    ".commentBox__editModeBtnsContainer"
+  ) as HTMLDivElement;
+  if (!isEditModeBtns) {
+    // Creating container for btns
+    const editModeBtnsContainer = document.createElement(
+      "div"
+    ) as HTMLDivElement;
+    editModeBtnsContainer.classList.add("commentBox__editModeBtnsContainer");
+
+    // Creating the buttons
+    const updateBtn = createButton({
+      text: "Update",
+      withIcon: false,
+      btnStyle: "fill",
+    });
+
+    const cancelBtn = createButton({
+      text: "Cancel",
+      withIcon: false,
+      btnStyle: "normal",
+    });
+
+    // Adding event listeners to buttons
+    updateBtn.addEventListener("click", updateComment);
+    cancelBtn.addEventListener("click", cancelEditMode);
+
+    editModeBtnsContainer.appendChild(updateBtn);
+    editModeBtnsContainer.appendChild(cancelBtn);
+
+    commentTextContainer.appendChild(editModeBtnsContainer);
+  }
+
+  const textarea = commentTextContainer.querySelector(
+    ".commentBox__textarea"
+  ) as HTMLTextAreaElement;
+
+  const btnsContainer = commentContainer.querySelector(
+    ".commentBox__editModeBtnsContainer"
+  ) as HTMLDivElement;
+
+  function updateComment() {
+    commentText.textContent = textarea.value;
+    cancelEditMode();
+  }
+
+  function cancelEditMode() {
+    textarea.remove();
+    btnsContainer.remove();
+    commentText.style.removeProperty("display");
+  }
 };
 
-const replyToComment = (): void => {
+const replyToComment = (event: Event): void => {
   console.log("reply");
 };
 
-const createButton = (text: "Reply" | "Delete" | "Edit"): HTMLButtonElement => {
+interface createButtonInterface {
+  text: string;
+  withIcon: boolean;
+  btnStyle: "fill" | "normal";
+}
+export const createButton = ({
+  text,
+  withIcon,
+  btnStyle,
+}: createButtonInterface): HTMLButtonElement => {
   const button = document.createElement("button") as HTMLButtonElement;
   button.classList.add("commentBox__btn");
+
+  // Applying button style
+  button.classList.add(btnStyle === "fill" ? "fill" : "normal");
   if (text === "Delete") button.classList.add("delete-btn");
   button.title = text;
-  button.innerHTML = `
+
+  // Add icon if true
+  if (withIcon) {
+    button.innerHTML = `
     <img src="./images/icon-${text.toLowerCase()}.svg" alt="" width="15" height="15" />
     <span>${text}</span>
   `;
+  } else {
+    button.innerText = text;
+  }
+
+  // Buttons with text 'reply', 'delete' and 'edit' have functions
+  // assigned by default
   if (text === "Reply") button.addEventListener("click", replyToComment);
   if (text === "Delete") button.addEventListener("click", deleteComment);
   if (text === "Edit") button.addEventListener("click", editComment);
+
   return button;
 };

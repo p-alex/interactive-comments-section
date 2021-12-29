@@ -1,11 +1,11 @@
 import { createCommentElement } from "./commentBox.js";
-import { data, mainContainer } from "./main.js";
+import { data, mainContainer, mainForm } from "./main.js";
 
-const formContainer = document.querySelector(
-  ".form__container"
-) as HTMLDivElement;
-
-export const appendForm = (): void => {
+export const appendForm = ({
+  appendToElement,
+}: {
+  appendToElement: Element;
+}): void => {
   const form = document.createElement("div") as HTMLDivElement;
 
   form.classList.add("form");
@@ -22,11 +22,9 @@ export const appendForm = (): void => {
     "#form-content"
   ) as HTMLTextAreaElement;
 
-  if (formContent !== null) {
-    submitBtn.addEventListener("click", () => addNewComment(formContent.value));
-  }
+  submitBtn.addEventListener("click", () => addNewComment(formContent.value));
 
-  formContainer.appendChild(form);
+  appendToElement.appendChild(form);
 };
 
 const addNewComment = (content: string): void => {
@@ -43,7 +41,7 @@ const addNewComment = (content: string): void => {
     mainContainer.appendChild(comment);
 
     // Reset text area
-    const formTextArea = formContainer.querySelector(
+    const formTextArea = mainForm.querySelector(
       ".form__text"
     ) as HTMLTextAreaElement;
     formTextArea.value = "";

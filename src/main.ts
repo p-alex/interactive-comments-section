@@ -11,6 +11,10 @@ export const mainContainer = document.querySelector(
   ".container"
 ) as HTMLDivElement;
 
+export const mainForm = document.querySelector(
+  ".form__container"
+) as HTMLDivElement;
+
 export let data: dataInterface;
 
 // Getting data from data.json
@@ -27,7 +31,7 @@ const getData = async (): Promise<void> => {
 const main = async (): Promise<void> => {
   if (data?.currentUser?.username) {
     appendComments(data.comments, data.currentUser);
-    appendForm();
+    appendForm({ appendToElement: mainForm });
     appendFooter();
   } else {
     const error = document.createElement("p") as HTMLParagraphElement;

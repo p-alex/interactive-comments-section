@@ -65,6 +65,11 @@
   color: hsl(211, 10%, 45%);
   margin-left: 20px;
 }
+.commentBox__editModeBtnsContainer {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+}
 .commentBox__btns {
   position: relative;
   display: flex;
@@ -73,8 +78,18 @@
   display: flex;
   align-items: center;
   font-weight: 700;
-  color: hsl(238, 40%, 52%);
   padding: 10px;
+}
+.commentBox__btn.fill {
+  background-color: hsl(238, 40%, 52%);
+  color: white;
+  border-radius: 5px;
+  font-weight: normal;
+}
+
+.commentBox__btn.normal {
+  color: hsl(238, 40%, 52%);
+  background: none;
 }
 .commentBox__btn.delete-btn {
   color: hsl(358, 79%, 66%);
@@ -82,9 +97,21 @@
 .commentBox__btn span {
   margin-left: 10px;
 }
+.commentBox__btn.fill span {
+  margin: 0;
+}
 .commentBox__text {
   position: relative;
   margin-top: 15px;
+}
+.commentBox__textarea {
+  width: 100%;
+  min-height: 100px;
+  border: solid #e8e9ed 1px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  resize: vertical;
 }
 .commentBox__mention {
   color: hsl(238, 40%, 52%);
@@ -93,6 +120,8 @@
 .commentBox__text p {
   color: hsl(211, 10%, 45%);
   line-height: 25px;
+}
+.commentBox__replyFormContainer {
 }
 .commentBox__replyContainer {
   position: relative;
@@ -123,7 +152,7 @@
   }
   .commentBox__rate {
     flex-direction: row;
-    margin-top: 10px;
+    margin-top: 15px;
   }
   .commentBox__likes {
     font-weight: 500;

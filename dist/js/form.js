@@ -1,7 +1,6 @@
 import { createCommentElement } from "./commentBox.js";
-import { data, mainContainer } from "./main.js";
-const formContainer = document.querySelector(".form__container");
-export const appendForm = () => {
+import { data, mainContainer, mainForm } from "./main.js";
+export const appendForm = ({ appendToElement, }) => {
     const form = document.createElement("div");
     form.classList.add("form");
     form.innerHTML = `
@@ -11,17 +10,15 @@ export const appendForm = () => {
     `;
     const submitBtn = form.querySelector(".form__submitBtn");
     const formContent = form.querySelector("#form-content");
-    if (formContent !== null) {
-        submitBtn.addEventListener("click", () => addNewComment(formContent.value));
-    }
-    formContainer.appendChild(form);
+    submitBtn.addEventListener("click", () => addNewComment(formContent.value));
+    appendToElement.appendChild(form);
 };
 const addNewComment = (content) => {
     if (content) {
         const comment = createCommentElement(0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), content, [], data.currentUser);
         mainContainer.appendChild(comment);
         // Reset text area
-        const formTextArea = formContainer.querySelector(".form__text");
+        const formTextArea = mainForm.querySelector(".form__text");
         formTextArea.value = "";
     }
 };
