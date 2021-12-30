@@ -1,5 +1,6 @@
-import { appendForm } from "./form.js";
+import { appendForm, createForm } from "./form.js";
 import { replyInterface, userInterface } from "./interfaces/index";
+import { data } from "./main.js";
 
 export const createCommentElement = (
   score: number,
@@ -8,10 +9,12 @@ export const createCommentElement = (
   createdAt: string,
   content: string,
   replies: replyInterface[],
-  currentUser: userInterface
+  currentUser: userInterface,
+  typeOfComment: "normal" | "reply"
 ): HTMLDivElement => {
   const container = document.createElement("div") as HTMLDivElement;
   container.classList.add("commentBox__container");
+  if (typeOfComment === "reply") container.classList.add("reply-comment");
   const template = `
     <div class="commentBox">
       <div class="commentBox__rate">
@@ -41,9 +44,7 @@ export const createCommentElement = (
       </div>
     </div>
     <div class="commentBox__replyFormContainer"></div>
-    <div class="commentBox__replyContainer" ${
-      replies.length === 0 ? 'style="margin:0"' : ""
-    }>
+    <div class="commentBox__replyContainer">
     <div class="commentBox__helperLine"></div>
       <div class="commentBox__replyCommentsContainer"></div>
     </div>
@@ -85,7 +86,8 @@ export const createCommentElement = (
           reply.createdAt,
           reply.content,
           [],
-          currentUser
+          currentUser,
+          "reply"
         )
       );
     });
@@ -155,8 +157,8 @@ const editComment = (event: Event): void => {
     });
 
     // Adding event listeners to buttons
-    updateBtn.addEventListener("click", updateComment);
-    cancelBtn.addEventListener("click", cancelEditMode);
+    updateBtn.addEventListener("click", () => updateComment());
+    cancelBtn.addEventListener("click", () => cancelEditMode());
 
     editModeBtnsContainer.appendChild(updateBtn);
     editModeBtnsContainer.appendChild(cancelBtn);
@@ -172,20 +174,73 @@ const editComment = (event: Event): void => {
     ".commentBox__editModeBtnsContainer"
   ) as HTMLDivElement;
 
-  function updateComment() {
+  const updateComment = () => {
     commentText.textContent = textarea.value;
     cancelEditMode();
-  }
+  };
 
-  function cancelEditMode() {
+  const cancelEditMode = () => {
     textarea.remove();
     btnsContainer.remove();
     commentText.style.removeProperty("display");
-  }
+  };
 };
 
 const replyToComment = (event: Event): void => {
-  console.log("reply");
+  const element = <Element>event.target;
+  const comment =
+    element!.parentElement!.parentElement!.parentElement!.parentElement!.parentElement!.closest(
+      ".commentBox__container"
+    )!;
+
+  const isTopLevelComment = !comment.classList.contains("reply-comment");
+
+  const commentFormContainer = comment.querySelector(
+    ".commentBox__replyFormContainer"
+  ) as HTMLDivElement;
+
+  const repliesContainer = comment.querySelector(
+    ".commentBox__replyCommentsContainer"
+  ) as HTMLDivElement;
+
+  if (!commentFormContainer.childNodes.length) {
+    const form = createForm({
+      textareaPlaceholder: "Write a reply...",
+      btnText: "Reply",
+      submitFunc: () =>
+        addReply({
+          addReplyTo: isTopLevelComment
+            ? repliesContainer
+            : comment.parentElement!,
+        }),
+      withCancel: true,
+    });
+
+    appendForm({
+      appendFormTo: commentFormContainer,
+      formToAppend: form,
+    });
+
+    const addReply = ({ addReplyTo }: { addReplyTo: Element }): void => {
+      const textarea = form.querySelector(
+        "#form-content"
+      ) as HTMLTextAreaElement;
+      if (textarea.value) {
+        const comment = createCommentElement(
+          0,
+          data.currentUser.image.png,
+          data.currentUser.username,
+          new Date().toLocaleDateString(),
+          textarea.value,
+          [],
+          data.currentUser,
+          "reply"
+        );
+        addReplyTo.appendChild(comment);
+        form.remove();
+      }
+    };
+  }
 };
 
 interface createButtonInterface {

@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { createCommentElement } from "./commentBox.js";
 import { appendFooter } from "./footer.js";
-import { appendForm } from "./form.js";
+import { addNewComment, appendForm, createForm } from "./form.js";
 export const mainContainer = document.querySelector(".container");
-export const mainForm = document.querySelector(".form__container");
+export const mainFormContainer = document.querySelector(".form__container");
 export let data;
 // Getting data from data.json
 const getData = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,25 +24,35 @@ const getData = () => __awaiter(void 0, void 0, void 0, function* () {
         console.error(err);
     }
 });
-const main = () => __awaiter(void 0, void 0, void 0, function* () {
+const main = () => {
     var _a;
     if ((_a = data === null || data === void 0 ? void 0 : data.currentUser) === null || _a === void 0 ? void 0 : _a.username) {
         appendComments(data.comments, data.currentUser);
-        appendForm({ appendToElement: mainForm });
+        appendForm({
+            appendFormTo: mainFormContainer,
+            formToAppend: createForm({
+                textareaPlaceholder: "Write a comment...",
+                btnText: "Send",
+                submitFunc: addNewComment,
+            }),
+        });
         appendFooter();
     }
     else {
-        const error = document.createElement("p");
-        error.innerText = "Something went wrong...";
-        mainContainer.appendChild(error);
+        appendErrorMessage({ message: "Something went wrong..." });
     }
-});
+};
 const appendComments = (comments, currentUser) => {
     comments.forEach((comment) => {
-        mainContainer.appendChild(createCommentElement(comment.score, comment.user.image.png, comment.user.username, comment.createdAt, comment.content, comment.replies, currentUser));
+        mainContainer.appendChild(createCommentElement(comment.score, comment.user.image.png, comment.user.username, comment.createdAt, comment.content, comment.replies, currentUser, "normal"));
     });
+};
+const appendErrorMessage = ({ message }) => {
+    const error = document.createElement("p");
+    error.innerText = message;
+    mainContainer.appendChild(error);
 };
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield getData();
-    yield main();
+    main();
 }))();

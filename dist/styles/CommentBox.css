@@ -2,6 +2,7 @@
   position: relative;
   width: 100%;
   animation: fadeIn 300ms;
+  margin: 20px 0;
 }
 .commentBox {
   position: relative;
@@ -13,6 +14,7 @@
   padding: 25px;
   margin-bottom: 20px;
 }
+
 .commentBox__rate {
   display: inline-flex;
   flex-direction: column;
@@ -54,8 +56,6 @@
 .commentBox__usernameAndDate {
   display: flex;
   margin: 0 20px;
-}
-.commentBox__profilePicture {
 }
 .commentBox__username {
   font-weight: 700;
@@ -120,16 +120,16 @@
 .commentBox__text p {
   color: hsl(211, 10%, 45%);
   line-height: 25px;
+  flex-grow: 1;
 }
-.commentBox__replyFormContainer {
+.commentBox__replyCommentsContainer {
+  width: 100%;
 }
 .commentBox__replyContainer {
   position: relative;
   display: flex;
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
-.commentBox__replyContainer .commentBox__container:last-child .commentBox {
+.commentBox__replyContainer .commentBox__container:last-of-type .commentBox {
   margin-bottom: 0;
 }
 .commentBox__helperLine {

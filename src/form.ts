@@ -1,47 +1,76 @@
-import { createCommentElement } from "./commentBox.js";
-import { data, mainContainer, mainForm } from "./main.js";
+import { createButton, createCommentElement } from "./commentBox.js";
+import { data, mainContainer, mainFormContainer } from "./main.js";
 
-export const appendForm = ({
-  appendToElement,
+export const createForm = ({
+  textareaPlaceholder,
+  btnText,
+  submitFunc,
+  withCancel,
 }: {
-  appendToElement: Element;
-}): void => {
+  textareaPlaceholder: string;
+  btnText: string;
+  submitFunc: any;
+  withCancel: boolean;
+}): Element => {
   const form = document.createElement("div") as HTMLDivElement;
-
   form.classList.add("form");
-
   form.innerHTML = `
       <img src="./images/avatars/image-juliusomo.png" alt="" width="45" height="45" />
-      <textarea class="form__text" aria-label="Write a comment" placeholder="Add a comment..." id="form-content"></textarea>
-      <button class="form__submitBtn" type="submit">Send</button>
+      <textarea class="form__text" aria-label="${textareaPlaceholder}" placeholder="${textareaPlaceholder}" id="form-content"></textarea>
+      <div class="form__btnsContainer">
+        <button class="form__submitBtn">${btnText}</button>
+      </div>
     `;
 
-  const submitBtn = form.querySelector(".form__submitBtn") as HTMLButtonElement;
+  if (withCancel) {
+    const btnsContainer = form.querySelector(
+      ".form__btnsContainer"
+    ) as HTMLDivElement;
+    const cancelBtn = createButton({
+      text: "Cancel",
+      withIcon: false,
+      btnStyle: "normal",
+    });
+    cancelBtn.addEventListener("click", () => form.remove());
+    btnsContainer.appendChild(cancelBtn);
+  }
 
-  const formContent = form.querySelector(
-    "#form-content"
-  ) as HTMLTextAreaElement;
-
-  submitBtn.addEventListener("click", () => addNewComment(formContent.value));
-
-  appendToElement.appendChild(form);
+  const formSubmitBtn = form.querySelector(
+    ".form__submitBtn"
+  ) as HTMLButtonElement;
+  formSubmitBtn.addEventListener("click", submitFunc);
+  return form;
 };
 
-const addNewComment = (content: string): void => {
-  if (content) {
+export const appendForm = ({
+  appendFormTo,
+  formToAppend,
+}: {
+  appendFormTo: Element;
+  formToAppend: Element;
+}) => {
+  appendFormTo.appendChild(formToAppend);
+};
+
+export const addNewComment = (): void => {
+  const formContent = mainFormContainer.querySelector(
+    "#form-content"
+  ) as HTMLTextAreaElement;
+  if (formContent.value) {
     const comment = createCommentElement(
       0,
       data.currentUser.image.png,
       data.currentUser.username,
       new Date().toLocaleDateString(),
-      content,
+      formContent.value,
       [],
-      data.currentUser
+      data.currentUser,
+      "normal"
     );
     mainContainer.appendChild(comment);
 
     // Reset text area
-    const formTextArea = mainForm.querySelector(
+    const formTextArea = mainFormContainer.querySelector(
       ".form__text"
     ) as HTMLTextAreaElement;
     formTextArea.value = "";

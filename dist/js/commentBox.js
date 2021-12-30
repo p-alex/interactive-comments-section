@@ -1,6 +1,10 @@
-export const createCommentElement = (score, userImage, username, createdAt, content, replies, currentUser) => {
+import { appendForm, createForm } from "./form.js";
+import { data } from "./main.js";
+export const createCommentElement = (score, userImage, username, createdAt, content, replies, currentUser, typeOfComment) => {
     const container = document.createElement("div");
     container.classList.add("commentBox__container");
+    if (typeOfComment === "reply")
+        container.classList.add("reply-comment");
     const template = `
     <div class="commentBox">
       <div class="commentBox__rate">
@@ -30,7 +34,7 @@ export const createCommentElement = (score, userImage, username, createdAt, cont
       </div>
     </div>
     <div class="commentBox__replyFormContainer"></div>
-    <div class="commentBox__replyContainer" ${replies.length === 0 ? 'style="margin:0"' : ""}>
+    <div class="commentBox__replyContainer">
     <div class="commentBox__helperLine"></div>
       <div class="commentBox__replyCommentsContainer"></div>
     </div>
@@ -51,7 +55,7 @@ export const createCommentElement = (score, userImage, username, createdAt, cont
     if (replies.length) {
         const repliesContainer = container.querySelector(".commentBox__replyCommentsContainer");
         replies.forEach((reply) => {
-            repliesContainer.appendChild(createCommentElement(reply.score, reply.user.image.png, reply.user.username, reply.createdAt, reply.content, [], currentUser));
+            repliesContainer.appendChild(createCommentElement(reply.score, reply.user.image.png, reply.user.username, reply.createdAt, reply.content, [], currentUser, "reply"));
         });
     }
     return container;
@@ -93,26 +97,54 @@ const editComment = (event) => {
             btnStyle: "normal",
         });
         // Adding event listeners to buttons
-        updateBtn.addEventListener("click", updateComment);
-        cancelBtn.addEventListener("click", cancelEditMode);
+        updateBtn.addEventListener("click", () => updateComment());
+        cancelBtn.addEventListener("click", () => cancelEditMode());
         editModeBtnsContainer.appendChild(updateBtn);
         editModeBtnsContainer.appendChild(cancelBtn);
         commentTextContainer.appendChild(editModeBtnsContainer);
     }
     const textarea = commentTextContainer.querySelector(".commentBox__textarea");
     const btnsContainer = commentContainer.querySelector(".commentBox__editModeBtnsContainer");
-    function updateComment() {
+    const updateComment = () => {
         commentText.textContent = textarea.value;
         cancelEditMode();
-    }
-    function cancelEditMode() {
+    };
+    const cancelEditMode = () => {
         textarea.remove();
         btnsContainer.remove();
         commentText.style.removeProperty("display");
-    }
+    };
 };
 const replyToComment = (event) => {
-    console.log("reply");
+    const element = event.target;
+    const comment = element.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".commentBox__container");
+    const isTopLevelComment = !comment.classList.contains("reply-comment");
+    const commentFormContainer = comment.querySelector(".commentBox__replyFormContainer");
+    const repliesContainer = comment.querySelector(".commentBox__replyCommentsContainer");
+    if (!commentFormContainer.childNodes.length) {
+        const form = createForm({
+            textareaPlaceholder: "Write a reply...",
+            btnText: "Reply",
+            submitFunc: () => addReply({
+                addReplyTo: isTopLevelComment
+                    ? repliesContainer
+                    : comment.parentElement,
+            }),
+            withCancel: true,
+        });
+        appendForm({
+            appendFormTo: commentFormContainer,
+            formToAppend: form,
+        });
+        const addReply = ({ addReplyTo }) => {
+            const textarea = form.querySelector("#form-content");
+            if (textarea.value) {
+                const comment = createCommentElement(0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), textarea.value, [], data.currentUser, "reply");
+                addReplyTo.appendChild(comment);
+                form.remove();
+            }
+        };
+    }
 };
 export const createButton = ({ text, withIcon, btnStyle, }) => {
     const button = document.createElement("button");
