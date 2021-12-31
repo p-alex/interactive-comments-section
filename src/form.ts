@@ -1,5 +1,11 @@
 import { createButton, createCommentElement } from "./commentBox.js";
-import { data, mainContainer, mainFormContainer } from "./main.js";
+import {
+  addCommentLocalStorageUpdate,
+  data,
+  mainContainer,
+  mainFormContainer,
+  randomIdGenerator,
+} from "./main.js";
 
 export const createForm = ({
   textareaPlaceholder,
@@ -58,6 +64,7 @@ export const addNewComment = (): void => {
   ) as HTMLTextAreaElement;
   if (formContent.value) {
     const comment = createCommentElement(
+      randomIdGenerator(),
       0,
       data.currentUser.image.png,
       data.currentUser.username,
@@ -73,6 +80,14 @@ export const addNewComment = (): void => {
     const formTextArea = mainFormContainer.querySelector(
       ".form__text"
     ) as HTMLTextAreaElement;
+    addCommentLocalStorageUpdate({
+      id: randomIdGenerator(),
+      content: formContent.value,
+      createdAt: new Date().toLocaleDateString(),
+      user: data.currentUser,
+      replies: [],
+      score: 0,
+    });
     formTextArea.value = "";
   }
 };

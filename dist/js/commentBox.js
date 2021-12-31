@@ -1,8 +1,9 @@
 import { appendForm, createForm } from "./form.js";
-import { data } from "./main.js";
-export const createCommentElement = (score, userImage, username, createdAt, content, replies, currentUser, typeOfComment) => {
+import { data, deleteCommentLocalStorageUpdate, editCommentLocalStorageUpdate, randomIdGenerator, } from "./main.js";
+export const createCommentElement = (id, score, userImage, username, createdAt, content, replies, currentUser, typeOfComment) => {
     const container = document.createElement("div");
     container.classList.add("commentBox__container");
+    container.id = id;
     if (typeOfComment === "reply")
         container.classList.add("reply-comment");
     const template = `
@@ -55,14 +56,31 @@ export const createCommentElement = (score, userImage, username, createdAt, cont
     if (replies.length) {
         const repliesContainer = container.querySelector(".commentBox__replyCommentsContainer");
         replies.forEach((reply) => {
-            repliesContainer.appendChild(createCommentElement(reply.score, reply.user.image.png, reply.user.username, reply.createdAt, reply.content, [], currentUser, "reply"));
+            repliesContainer.appendChild(createCommentElement(reply.id, reply.score, reply.user.image.png, reply.user.username, reply.createdAt, reply.content, [], currentUser, "reply"));
         });
     }
     return container;
 };
 const deleteComment = (event) => {
+    var _a, _b;
     const element = event.target;
     const parent = (element.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".commentBox__container"));
+    const isReply = parent.classList.contains("reply-comment");
+    if (isReply) {
+        const parentCommentOfTheReply = (_b = (_a = parent.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement;
+        deleteCommentLocalStorageUpdate({
+            parentId: parentCommentOfTheReply.getAttribute("id"),
+            isReply,
+            replyId: parent.getAttribute("id"),
+        });
+    }
+    else {
+        deleteCommentLocalStorageUpdate({
+            parentId: parent.getAttribute("id"),
+            isReply,
+            replyId: "",
+        });
+    }
     parent.remove();
 };
 const editComment = (event) => {
@@ -106,7 +124,26 @@ const editComment = (event) => {
     const textarea = commentTextContainer.querySelector(".commentBox__textarea");
     const btnsContainer = commentContainer.querySelector(".commentBox__editModeBtnsContainer");
     const updateComment = () => {
+        var _a, _b;
         commentText.textContent = textarea.value;
+        const isReply = commentContainer.classList.contains("reply-comment");
+        if (isReply) {
+            const parentCommentOfTheReply = (_b = (_a = commentContainer.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement;
+            editCommentLocalStorageUpdate({
+                parentId: parentCommentOfTheReply.getAttribute("id"),
+                isReply,
+                replyId: commentContainer.getAttribute("id"),
+                content: textarea.value,
+            });
+            cancelEditMode();
+            return;
+        }
+        editCommentLocalStorageUpdate({
+            parentId: commentContainer.getAttribute("id"),
+            isReply,
+            replyId: "",
+            content: textarea.value,
+        });
         cancelEditMode();
     };
     const cancelEditMode = () => {
@@ -117,18 +154,17 @@ const editComment = (event) => {
 };
 const replyToComment = (event) => {
     const element = event.target;
-    const comment = element.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".commentBox__container");
-    const isTopLevelComment = !comment.classList.contains("reply-comment");
-    const commentFormContainer = comment.querySelector(".commentBox__replyFormContainer");
-    const repliesContainer = comment.querySelector(".commentBox__replyCommentsContainer");
+    const commentContainer = element.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".commentBox__container");
+    const isTopLevelComment = !commentContainer.classList.contains("reply-comment");
+    const commentFormContainer = commentContainer.querySelector(".commentBox__replyFormContainer");
+    const repliesContainer = commentContainer.querySelector(".commentBox__replyCommentsContainer");
+    const mainContainer = commentContainer.parentElement;
     if (!commentFormContainer.childNodes.length) {
         const form = createForm({
             textareaPlaceholder: "Write a reply...",
             btnText: "Reply",
             submitFunc: () => addReply({
-                addReplyTo: isTopLevelComment
-                    ? repliesContainer
-                    : comment.parentElement,
+                addReplyTo: isTopLevelComment ? repliesContainer : mainContainer,
             }),
             withCancel: true,
         });
@@ -139,7 +175,7 @@ const replyToComment = (event) => {
         const addReply = ({ addReplyTo }) => {
             const textarea = form.querySelector("#form-content");
             if (textarea.value) {
-                const comment = createCommentElement(0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), textarea.value, [], data.currentUser, "reply");
+                const comment = createCommentElement(randomIdGenerator(), 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), textarea.value, [], data.currentUser, "reply");
                 addReplyTo.appendChild(comment);
                 form.remove();
             }

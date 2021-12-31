@@ -4,7 +4,7 @@ export interface dataInterface {
 }
 
 export interface commentsInterface {
-  id: number;
+  id: string;
   content: string;
   createdAt: string;
   replies: replyInterface[];
@@ -21,9 +21,9 @@ export interface userInterface {
 }
 
 export interface replyInterface {
+  id: string;
   content: string;
   createdAt: string;
-  id: number;
   replyingTo: string;
   score: number;
   user: userInterface;

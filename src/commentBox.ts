@@ -1,8 +1,14 @@
 import { appendForm, createForm } from "./form.js";
 import { replyInterface, userInterface } from "./interfaces/index";
-import { data } from "./main.js";
+import {
+  data,
+  deleteCommentLocalStorageUpdate,
+  editCommentLocalStorageUpdate,
+  randomIdGenerator,
+} from "./main.js";
 
 export const createCommentElement = (
+  id: string,
   score: number,
   userImage: string,
   username: string,
@@ -14,6 +20,7 @@ export const createCommentElement = (
 ): HTMLDivElement => {
   const container = document.createElement("div") as HTMLDivElement;
   container.classList.add("commentBox__container");
+  container.id = id;
   if (typeOfComment === "reply") container.classList.add("reply-comment");
   const template = `
     <div class="commentBox">
@@ -80,6 +87,7 @@ export const createCommentElement = (
     replies.forEach((reply: replyInterface): void => {
       repliesContainer.appendChild(
         createCommentElement(
+          reply.id,
           reply.score,
           reply.user.image.png,
           reply.user.username,
@@ -103,6 +111,24 @@ const deleteComment = (event: Event): void => {
       ".commentBox__container"
     )
   );
+
+  const isReply = parent.classList.contains("reply-comment");
+
+  if (isReply) {
+    const parentCommentOfTheReply =
+      parent.parentElement?.parentElement?.parentElement;
+    deleteCommentLocalStorageUpdate({
+      parentId: parentCommentOfTheReply!.getAttribute("id")!,
+      isReply,
+      replyId: parent.getAttribute("id")!,
+    });
+  } else {
+    deleteCommentLocalStorageUpdate({
+      parentId: parent.getAttribute("id")!,
+      isReply,
+      replyId: "",
+    });
+  }
   parent.remove();
 };
 
@@ -125,6 +151,7 @@ const editComment = (event: Event): void => {
   const isTextarea = commentContainer.querySelector(
     ".commentBox__textarea"
   ) as HTMLTextAreaElement;
+
   if (!isTextarea) {
     const textarea = document.createElement("textarea") as HTMLTextAreaElement;
     textarea.classList.add("commentBox__textarea");
@@ -176,6 +203,25 @@ const editComment = (event: Event): void => {
 
   const updateComment = () => {
     commentText.textContent = textarea.value;
+    const isReply = commentContainer.classList.contains("reply-comment");
+    if (isReply) {
+      const parentCommentOfTheReply =
+        commentContainer.parentElement?.parentElement?.parentElement;
+      editCommentLocalStorageUpdate({
+        parentId: parentCommentOfTheReply!.getAttribute("id")!,
+        isReply,
+        replyId: commentContainer.getAttribute("id")!,
+        content: textarea.value,
+      });
+      cancelEditMode();
+      return;
+    }
+    editCommentLocalStorageUpdate({
+      parentId: commentContainer.getAttribute("id")!,
+      isReply,
+      replyId: "",
+      content: textarea.value,
+    });
     cancelEditMode();
   };
 
@@ -188,20 +234,23 @@ const editComment = (event: Event): void => {
 
 const replyToComment = (event: Event): void => {
   const element = <Element>event.target;
-  const comment =
+  const commentContainer =
     element!.parentElement!.parentElement!.parentElement!.parentElement!.parentElement!.closest(
       ".commentBox__container"
     )!;
 
-  const isTopLevelComment = !comment.classList.contains("reply-comment");
+  const isTopLevelComment =
+    !commentContainer.classList.contains("reply-comment");
 
-  const commentFormContainer = comment.querySelector(
+  const commentFormContainer = commentContainer.querySelector(
     ".commentBox__replyFormContainer"
   ) as HTMLDivElement;
 
-  const repliesContainer = comment.querySelector(
+  const repliesContainer = commentContainer.querySelector(
     ".commentBox__replyCommentsContainer"
   ) as HTMLDivElement;
+
+  const mainContainer = commentContainer.parentElement;
 
   if (!commentFormContainer.childNodes.length) {
     const form = createForm({
@@ -209,9 +258,7 @@ const replyToComment = (event: Event): void => {
       btnText: "Reply",
       submitFunc: () =>
         addReply({
-          addReplyTo: isTopLevelComment
-            ? repliesContainer
-            : comment.parentElement!,
+          addReplyTo: isTopLevelComment ? repliesContainer : mainContainer!,
         }),
       withCancel: true,
     });
@@ -227,6 +274,7 @@ const replyToComment = (event: Event): void => {
       ) as HTMLTextAreaElement;
       if (textarea.value) {
         const comment = createCommentElement(
+          randomIdGenerator(),
           0,
           data.currentUser.image.png,
           data.currentUser.username,
