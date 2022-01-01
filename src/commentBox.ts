@@ -1,12 +1,19 @@
 import { appendForm, createForm } from "./form.js";
-import { replyInterface, userInterface } from "./interfaces/index";
 import {
   addCommentLocalStorageUpdate,
-  data,
   deleteCommentLocalStorageUpdate,
   editCommentLocalStorageUpdate,
-  randomIdGenerator,
-} from "./main.js";
+  getDataFromLocalStorage,
+} from "./handleLocalStorage.js";
+import {
+  dataInterface,
+  replyInterface,
+  userInterface,
+} from "./interfaces/index";
+import { randomIdGenerator } from "./randomIdGenerator.js";
+
+const data: dataInterface | null = getDataFromLocalStorage()!;
+const { currentUser } = data;
 
 export const createCommentElement = (
   id: string,
@@ -279,12 +286,12 @@ const replyToComment = (event: Event): void => {
         const comment = createCommentElement(
           randomId,
           0,
-          data.currentUser.image.png,
-          data.currentUser.username,
+          currentUser.image.png,
+          currentUser.username,
           new Date().toLocaleDateString(),
           textarea.value,
           [],
-          data.currentUser,
+          currentUser,
           "reply"
         );
         addReplyTo.appendChild(comment);

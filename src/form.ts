@@ -1,11 +1,14 @@
 import { createButton, createCommentElement } from "./commentBox.js";
 import {
   addCommentLocalStorageUpdate,
-  data,
-  mainContainer,
-  mainFormContainer,
-  randomIdGenerator,
-} from "./main.js";
+  getDataFromLocalStorage,
+} from "./handleLocalStorage.js";
+import { dataInterface } from "./interfaces/index.js";
+import { mainContainer, mainFormContainer } from "./main.js";
+import { randomIdGenerator } from "./randomIdGenerator.js";
+
+const data: dataInterface | null = getDataFromLocalStorage()!;
+const { currentUser } = data;
 
 export const createForm = ({
   textareaPlaceholder,
@@ -67,12 +70,12 @@ export const addNewComment = (): void => {
     const comment = createCommentElement(
       randomId,
       0,
-      data.currentUser.image.png,
-      data.currentUser.username,
+      currentUser.image.png,
+      currentUser.username,
       new Date().toLocaleDateString(),
       formContent.value,
       [],
-      data.currentUser,
+      currentUser,
       "normal"
     );
     mainContainer.appendChild(comment);

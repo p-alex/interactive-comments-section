@@ -1,5 +1,8 @@
 import { appendForm, createForm } from "./form.js";
-import { addCommentLocalStorageUpdate, data, deleteCommentLocalStorageUpdate, editCommentLocalStorageUpdate, randomIdGenerator, } from "./main.js";
+import { addCommentLocalStorageUpdate, deleteCommentLocalStorageUpdate, editCommentLocalStorageUpdate, getDataFromLocalStorage, } from "./handleLocalStorage.js";
+import { randomIdGenerator } from "./randomIdGenerator.js";
+const data = getDataFromLocalStorage();
+const { currentUser } = data;
 export const createCommentElement = (id, score, userImage, username, createdAt, content, replies, currentUser, typeOfComment) => {
     const container = document.createElement("div");
     container.classList.add("commentBox__container");
@@ -178,7 +181,7 @@ const replyToComment = (event) => {
             const textarea = form.querySelector("#form-content");
             if (textarea.value) {
                 const randomId = randomIdGenerator();
-                const comment = createCommentElement(randomId, 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), textarea.value, [], data.currentUser, "reply");
+                const comment = createCommentElement(randomId, 0, currentUser.image.png, currentUser.username, new Date().toLocaleDateString(), textarea.value, [], currentUser, "reply");
                 addReplyTo.appendChild(comment);
                 addCommentLocalStorageUpdate({
                     id: comment.id,

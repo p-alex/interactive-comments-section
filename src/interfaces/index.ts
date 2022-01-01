@@ -18,6 +18,12 @@ export interface userInterface {
     webp: string;
   };
   username: string;
+  scored: scoreInterface[];
+}
+
+export interface scoreInterface {
+  id: string;
+  scoreType: "upvote" | "downvote";
 }
 
 export interface replyInterface {
