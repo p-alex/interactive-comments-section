@@ -39,7 +39,9 @@ interface IaddCommentLocalStorage {
   score: number;
 }
 export const addCommentLocalStorageUpdate = (
-  commentData: commentsInterface
+  commentData: commentsInterface,
+  isReply: boolean,
+  index: string
 ): void => {
   const { id, content, createdAt, user, replies, score } = commentData;
   const data: dataInterface = JSON.parse(localStorage.getItem("data")!);
@@ -51,8 +53,28 @@ export const addCommentLocalStorageUpdate = (
     replies,
     score,
   };
+  if (isReply) {
+    const data: dataInterface = JSON.parse(localStorage.getItem("data")!);
+    const newReply = {
+      id,
+      content,
+      createdAt,
+      replyingTo: "",
+      score,
+      user,
+    };
+    data.comments.forEach((comment) => {
+      if (comment.id === index) {
+        comment.replies.push(newReply);
+      }
+    });
+    localStorage.setItem("data", JSON.stringify(data));
+    refreshLocalStorageData();
+    return;
+  }
   data.comments.push(newComment);
   localStorage.setItem("data", JSON.stringify(data));
+  refreshLocalStorageData();
 };
 
 export const deleteCommentLocalStorageUpdate = ({
@@ -119,6 +141,7 @@ export const editCommentLocalStorageUpdate = ({
       }
       return comment;
     });
+    console.log(comments);
     data.comments = comments;
     localStorage.setItem("data", JSON.stringify(data));
 

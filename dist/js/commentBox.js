@@ -1,5 +1,5 @@
 import { appendForm, createForm } from "./form.js";
-import { data, deleteCommentLocalStorageUpdate, editCommentLocalStorageUpdate, randomIdGenerator, } from "./main.js";
+import { addCommentLocalStorageUpdate, data, deleteCommentLocalStorageUpdate, editCommentLocalStorageUpdate, randomIdGenerator, } from "./main.js";
 export const createCommentElement = (id, score, userImage, username, createdAt, content, replies, currentUser, typeOfComment) => {
     const container = document.createElement("div");
     container.classList.add("commentBox__container");
@@ -173,10 +173,21 @@ const replyToComment = (event) => {
             formToAppend: form,
         });
         const addReply = ({ addReplyTo }) => {
+            var _a;
+            const replyParent = (_a = addReplyTo.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement;
             const textarea = form.querySelector("#form-content");
             if (textarea.value) {
-                const comment = createCommentElement(randomIdGenerator(), 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), textarea.value, [], data.currentUser, "reply");
+                const randomId = randomIdGenerator();
+                const comment = createCommentElement(randomId, 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), textarea.value, [], data.currentUser, "reply");
                 addReplyTo.appendChild(comment);
+                addCommentLocalStorageUpdate({
+                    id: comment.id,
+                    content: textarea.value,
+                    createdAt: new Date().toLocaleDateString(),
+                    user: data.currentUser,
+                    replies: [],
+                    score: 0,
+                }, true, replyParent === null || replyParent === void 0 ? void 0 : replyParent.getAttribute("id"));
                 form.remove();
             }
         };

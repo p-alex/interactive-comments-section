@@ -26,7 +26,7 @@ const getData = () => __awaiter(void 0, void 0, void 0, function* () {
         console.error(err);
     }
 });
-export const addCommentLocalStorageUpdate = (commentData) => {
+export const addCommentLocalStorageUpdate = (commentData, isReply, index) => {
     const { id, content, createdAt, user, replies, score } = commentData;
     const data = JSON.parse(localStorage.getItem("data"));
     const newComment = {
@@ -37,8 +37,28 @@ export const addCommentLocalStorageUpdate = (commentData) => {
         replies,
         score,
     };
+    if (isReply) {
+        const data = JSON.parse(localStorage.getItem("data"));
+        const newReply = {
+            id,
+            content,
+            createdAt,
+            replyingTo: "",
+            score,
+            user,
+        };
+        data.comments.forEach((comment) => {
+            if (comment.id === index) {
+                comment.replies.push(newReply);
+            }
+        });
+        localStorage.setItem("data", JSON.stringify(data));
+        refreshLocalStorageData();
+        return;
+    }
     data.comments.push(newComment);
     localStorage.setItem("data", JSON.stringify(data));
+    refreshLocalStorageData();
 };
 export const deleteCommentLocalStorageUpdate = ({ parentId, isReply, replyId, }) => {
     const data = JSON.parse(localStorage.getItem("data"));
@@ -83,6 +103,7 @@ export const editCommentLocalStorageUpdate = ({ parentId, isReply, replyId, cont
             }
             return comment;
         });
+        console.log(comments);
         data.comments = comments;
         localStorage.setItem("data", JSON.stringify(data));
         refreshLocalStorageData();

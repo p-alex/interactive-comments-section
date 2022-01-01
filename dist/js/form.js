@@ -41,7 +41,7 @@ export const addNewComment = () => {
             user: data.currentUser,
             replies: [],
             score: 0,
-        });
+        }, false, "");
         formTextArea.value = "";
     }
 };

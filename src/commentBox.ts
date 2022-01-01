@@ -1,6 +1,7 @@
 import { appendForm, createForm } from "./form.js";
 import { replyInterface, userInterface } from "./interfaces/index";
 import {
+  addCommentLocalStorageUpdate,
   data,
   deleteCommentLocalStorageUpdate,
   editCommentLocalStorageUpdate,
@@ -269,12 +270,14 @@ const replyToComment = (event: Event): void => {
     });
 
     const addReply = ({ addReplyTo }: { addReplyTo: Element }): void => {
+      const replyParent = addReplyTo.parentElement?.parentElement;
       const textarea = form.querySelector(
         "#form-content"
       ) as HTMLTextAreaElement;
       if (textarea.value) {
+        const randomId = randomIdGenerator();
         const comment = createCommentElement(
-          randomIdGenerator(),
+          randomId,
           0,
           data.currentUser.image.png,
           data.currentUser.username,
@@ -285,6 +288,18 @@ const replyToComment = (event: Event): void => {
           "reply"
         );
         addReplyTo.appendChild(comment);
+        addCommentLocalStorageUpdate(
+          {
+            id: comment.id,
+            content: textarea.value,
+            createdAt: new Date().toLocaleDateString(),
+            user: data.currentUser,
+            replies: [],
+            score: 0,
+          },
+          true,
+          replyParent?.getAttribute("id")!
+        );
         form.remove();
       }
     };
