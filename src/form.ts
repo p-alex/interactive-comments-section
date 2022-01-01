@@ -63,8 +63,9 @@ export const addNewComment = (): void => {
     "#form-content"
   ) as HTMLTextAreaElement;
   if (formContent.value) {
+    const randomId = randomIdGenerator();
     const comment = createCommentElement(
-      randomIdGenerator(),
+      randomId,
       0,
       data.currentUser.image.png,
       data.currentUser.username,
@@ -82,7 +83,7 @@ export const addNewComment = (): void => {
     ) as HTMLTextAreaElement;
     addCommentLocalStorageUpdate(
       {
-        id: randomIdGenerator(),
+        id: randomId,
         content: formContent.value,
         createdAt: new Date().toLocaleDateString(),
         user: data.currentUser,
