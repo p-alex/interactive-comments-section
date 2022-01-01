@@ -8,7 +8,6 @@ import { mainContainer, mainFormContainer } from "./main.js";
 import { randomIdGenerator } from "./randomIdGenerator.js";
 
 const data: dataInterface | null = getDataFromLocalStorage()!;
-const { currentUser } = data;
 
 export const createForm = ({
   textareaPlaceholder,
@@ -70,12 +69,12 @@ export const addNewComment = (): void => {
     const comment = createCommentElement(
       randomId,
       0,
-      currentUser.image.png,
-      currentUser.username,
+      data.currentUser.image.png,
+      data.currentUser.username,
       new Date().toLocaleDateString(),
       formContent.value,
       [],
-      currentUser,
+      data.currentUser,
       "normal"
     );
     mainContainer.appendChild(comment);

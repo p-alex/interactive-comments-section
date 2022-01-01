@@ -3,7 +3,6 @@ import { addCommentLocalStorageUpdate, getDataFromLocalStorage, } from "./handle
 import { mainContainer, mainFormContainer } from "./main.js";
 import { randomIdGenerator } from "./randomIdGenerator.js";
 const data = getDataFromLocalStorage();
-const { currentUser } = data;
 export const createForm = ({ textareaPlaceholder, btnText, submitFunc, withCancel, }) => {
     const form = document.createElement("div");
     form.classList.add("form");
@@ -35,7 +34,7 @@ export const addNewComment = () => {
     const formContent = mainFormContainer.querySelector("#form-content");
     if (formContent.value) {
         const randomId = randomIdGenerator();
-        const comment = createCommentElement(randomId, 0, currentUser.image.png, currentUser.username, new Date().toLocaleDateString(), formContent.value, [], currentUser, "normal");
+        const comment = createCommentElement(randomId, 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), formContent.value, [], data.currentUser, "normal");
         mainContainer.appendChild(comment);
         // Reset text area
         const formTextArea = mainFormContainer.querySelector(".form__text");

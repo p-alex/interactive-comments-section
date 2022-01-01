@@ -13,7 +13,6 @@ import {
 import { randomIdGenerator } from "./randomIdGenerator.js";
 
 const data: dataInterface | null = getDataFromLocalStorage()!;
-const { currentUser } = data;
 
 export const createCommentElement = (
   id: string,
@@ -286,12 +285,12 @@ const replyToComment = (event: Event): void => {
         const comment = createCommentElement(
           randomId,
           0,
-          currentUser.image.png,
-          currentUser.username,
+          data.currentUser.image.png,
+          data.currentUser.username,
           new Date().toLocaleDateString(),
           textarea.value,
           [],
-          currentUser,
+          data.currentUser,
           "reply"
         );
         addReplyTo.appendChild(comment);
