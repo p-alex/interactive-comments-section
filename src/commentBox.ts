@@ -296,7 +296,7 @@ const replyToComment = (event: Event): void => {
         addReplyTo.appendChild(comment);
         addCommentLocalStorageUpdate(
           {
-            id: comment.id,
+            id: randomId,
             content: textarea.value,
             createdAt: new Date().toLocaleDateString(),
             user: data.currentUser,

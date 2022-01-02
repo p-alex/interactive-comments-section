@@ -183,7 +183,7 @@ const replyToComment = (event) => {
                 const comment = createCommentElement(randomId, 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), textarea.value, [], data.currentUser, "reply");
                 addReplyTo.appendChild(comment);
                 addCommentLocalStorageUpdate({
-                    id: comment.id,
+                    id: randomId,
                     content: textarea.value,
                     createdAt: new Date().toLocaleDateString(),
                     user: data.currentUser,
