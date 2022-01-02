@@ -1,8 +1,10 @@
 import { appendForm, createForm } from "./form.js";
-import { addCommentLocalStorageUpdate, deleteCommentLocalStorageUpdate, editCommentLocalStorageUpdate, getDataFromLocalStorage, } from "./handleLocalStorage.js";
+import { addCommentLocalStorageUpdate, deleteCommentLocalStorageUpdate, editCommentLocalStorageUpdate, getDataFromLocalStorage, scoreCommentLocalStorageUpdate, } from "./handleLocalStorage.js";
+import { handleScoreChange } from "./handleScoreChange.js";
 import { randomIdGenerator } from "./randomIdGenerator.js";
 const data = getDataFromLocalStorage();
 export const createCommentElement = (id, score, userImage, username, createdAt, content, replies, currentUser, typeOfComment) => {
+    var _a;
     const container = document.createElement("div");
     container.classList.add("commentBox__container");
     container.id = id;
@@ -11,11 +13,11 @@ export const createCommentElement = (id, score, userImage, username, createdAt, 
     const template = `
     <div class="commentBox">
       <div class="commentBox__rate">
-          <button class="commentBox__rateBtn" aria-label="Like comment">
+          <button class="commentBox__rateBtn" id="upvote-btn" aria-label="Upvote comment">
             <img src="./images/icon-plus.svg" alt="" width='10' height='10'/>
           </button>
           <p class="commentBox__likes">${score}</p>
-          <button class="commentBox__rateBtn" aria-label="Dislike comment">
+          <button class="commentBox__rateBtn" id="downvote-btn" aria-label="Downvote comment">
             <img src="./images/icon-minus.svg" alt="" width='10' height='3' />
           </button>
       </div>
@@ -43,6 +45,56 @@ export const createCommentElement = (id, score, userImage, username, createdAt, 
     </div>
     `;
     container.innerHTML = template;
+    const rateContainer = container.querySelector(".commentBox__rate");
+    const upvoteBtn = rateContainer === null || rateContainer === void 0 ? void 0 : rateContainer.querySelector("#upvote-btn");
+    const downvoteBtn = rateContainer.querySelector("#downvote-btn");
+    const scoreParagraph = rateContainer.querySelector(".commentBox__likes");
+    const commentUsername = (_a = container.querySelector(".commentBox__username")) === null || _a === void 0 ? void 0 : _a.textContent;
+    currentUser.scored.forEach((score) => {
+        if (score.id === id) {
+            if (score.scoreType === "upvote") {
+                upvoteBtn.classList.add("btn-active");
+                return;
+            }
+            downvoteBtn.classList.add("btn-active");
+        }
+    });
+    if (commentUsername === currentUser.username) {
+        upvoteBtn.disabled = true;
+        downvoteBtn.disabled = true;
+    }
+    else {
+        upvoteBtn.addEventListener("click", () => {
+            handleScoreChange({
+                elementToChange: scoreParagraph,
+                commentId: container.id,
+                scoreType: "upvote",
+                commentType: typeOfComment,
+                upvoteBtn,
+                downvoteBtn,
+            });
+            scoreCommentLocalStorageUpdate({
+                scoreType: "upvote",
+                commentId: container.id,
+                isReply: typeOfComment === "reply",
+            });
+        });
+        downvoteBtn.addEventListener("click", () => {
+            handleScoreChange({
+                elementToChange: scoreParagraph,
+                commentId: container.id,
+                scoreType: "downvote",
+                commentType: typeOfComment,
+                upvoteBtn,
+                downvoteBtn,
+            });
+            scoreCommentLocalStorageUpdate({
+                scoreType: "downvote",
+                commentId: container.id,
+                isReply: typeOfComment === "reply",
+            });
+        });
+    }
     // Adding Reply, Delete, and Edit buttons based on currentUser
     const commentBoxBtns = container.querySelector(".commentBox__btns");
     if (currentUser.username === username) {

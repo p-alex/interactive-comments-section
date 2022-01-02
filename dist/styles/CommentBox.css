@@ -30,6 +30,20 @@
   width: 40px;
   height: 40px;
 }
+.commentBox__rateBtn:disabled {
+  cursor: not-allowed;
+}
+.commentBox__rateBtn:first-of-type {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.commentBox__rateBtn:last-of-type {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.commentBox__rateBtn.btn-active {
+  background: rgba(0, 0, 0, 0.1);
+}
 .commentBox__likes {
   font-weight: 500;
   color: hsl(238, 40%, 52%);
