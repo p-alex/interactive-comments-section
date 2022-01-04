@@ -17,6 +17,9 @@
   font-size: 1rem;
   resize: vertical;
 }
+.form__text:focus {
+  outline: solid hsl(238, 40%, 52%) 1px;
+}
 .form__btnsContainer {
   display: flex;
   flex-direction: column;
@@ -29,6 +32,10 @@
   color: white;
   text-transform: uppercase;
   background-color: hsl(238, 40%, 52%);
+  transition: background 200ms ease-in-out;
+}
+.form__submitBtn:hover {
+  background-color: hsl(238, 53%, 59%);
 }
 @keyframes fadeIn {
   from {

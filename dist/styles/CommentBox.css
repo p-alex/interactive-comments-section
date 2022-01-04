@@ -29,6 +29,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
+  transition: filter 200ms ease-in-out, transform 200ms ease-in-out;
 }
 .commentBox__rateBtn:disabled {
   cursor: not-allowed;
@@ -42,7 +43,8 @@
   border-bottom-right-radius: 10px;
 }
 .commentBox__rateBtn.btn-active {
-  background: rgba(0, 0, 0, 0.1);
+  filter: brightness(0.4);
+  transform: scale(1.1);
 }
 .commentBox__likes {
   font-weight: 500;
@@ -127,6 +129,9 @@
   border-radius: 5px;
   font-size: 1rem;
   resize: vertical;
+}
+.commentBox__textarea:focus {
+  outline: solid hsl(238, 40%, 52%) 1px;
 }
 .commentBox__mention {
   color: hsl(238, 40%, 52%);
