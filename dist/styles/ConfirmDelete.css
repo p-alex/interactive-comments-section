@@ -1,0 +1,67 @@
+.confirmModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  animation: fadeIn 300ms;
+}
+.confirmModal__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 11;
+}
+.confirmModal__body {
+  max-width: 400px;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 0 20px;
+  z-index: 12;
+}
+.confirmModal__title {
+  font-size: 1.5rem;
+  color: hsl(212, 24%, 26%);
+  margin: 0;
+}
+.confirmModal__text {
+  width: 100%;
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
+.confirmModal__btns {
+  display: flex;
+}
+.confirmModal__btn {
+  display: block;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  background: hsl(211, 10%, 45%);
+  color: white;
+  width: 100%;
+  margin-right: 20px;
+}
+.confirmModal__btn:last-of-type {
+  margin-right: 0;
+}
+.confirmModal__btn.confirmModal__btn-delete {
+  background: hsl(358, 79%, 66%);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

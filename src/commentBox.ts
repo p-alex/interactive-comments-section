@@ -1,7 +1,7 @@
+import { sendCommentDataToModal, showModal } from "./confirmDelete.js";
 import { appendForm, createForm } from "./form.js";
 import {
   addCommentLocalStorageUpdate,
-  deleteCommentLocalStorageUpdate,
   editCommentLocalStorageUpdate,
   getDataFromLocalStorage,
   scoreCommentLocalStorageUpdate,
@@ -175,7 +175,8 @@ export const createCommentElement = (
   return container;
 };
 
-const deleteComment = (event: Event): void => {
+const activateModal = (event: Event): void => {
+  showModal();
   const element = <Element>event.target;
   const parent = <HTMLDivElement>(
     element!.parentElement!.parentElement!.parentElement!.parentElement!.parentElement!.closest(
@@ -188,19 +189,20 @@ const deleteComment = (event: Event): void => {
   if (isReply) {
     const parentCommentOfTheReply =
       parent.parentElement?.parentElement?.parentElement;
-    deleteCommentLocalStorageUpdate({
+    sendCommentDataToModal({
+      elementToDelete: parent,
       parentId: parentCommentOfTheReply!.getAttribute("id")!,
       isReply,
       replyId: parent.getAttribute("id")!,
     });
   } else {
-    deleteCommentLocalStorageUpdate({
-      parentId: parent.getAttribute("id")!,
+    sendCommentDataToModal({
+      elementToDelete: parent,
+      parentId: parent!.getAttribute("id")!,
       isReply,
       replyId: "",
     });
   }
-  parent.remove();
 };
 
 const editComment = (event: Event): void => {
@@ -407,7 +409,7 @@ export const createButton = ({
   // Buttons with text 'reply', 'delete' and 'edit' have functions
   // assigned by default
   if (text === "Reply") button.addEventListener("click", replyToComment);
-  if (text === "Delete") button.addEventListener("click", deleteComment);
+  if (text === "Delete") button.addEventListener("click", activateModal);
   if (text === "Edit") button.addEventListener("click", editComment);
 
   return button;

@@ -1,5 +1,6 @@
+import { sendCommentDataToModal, showModal } from "./confirmDelete.js";
 import { appendForm, createForm } from "./form.js";
-import { addCommentLocalStorageUpdate, deleteCommentLocalStorageUpdate, editCommentLocalStorageUpdate, getDataFromLocalStorage, scoreCommentLocalStorageUpdate, } from "./handleLocalStorage.js";
+import { addCommentLocalStorageUpdate, editCommentLocalStorageUpdate, getDataFromLocalStorage, scoreCommentLocalStorageUpdate, } from "./handleLocalStorage.js";
 import { handleScoreChange } from "./handleScoreChange.js";
 import { randomIdGenerator } from "./randomIdGenerator.js";
 const data = getDataFromLocalStorage();
@@ -115,27 +116,29 @@ export const createCommentElement = (id, score, userImage, username, createdAt, 
     }
     return container;
 };
-const deleteComment = (event) => {
+const activateModal = (event) => {
     var _a, _b;
+    showModal();
     const element = event.target;
     const parent = (element.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".commentBox__container"));
     const isReply = parent.classList.contains("reply-comment");
     if (isReply) {
         const parentCommentOfTheReply = (_b = (_a = parent.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement;
-        deleteCommentLocalStorageUpdate({
+        sendCommentDataToModal({
+            elementToDelete: parent,
             parentId: parentCommentOfTheReply.getAttribute("id"),
             isReply,
             replyId: parent.getAttribute("id"),
         });
     }
     else {
-        deleteCommentLocalStorageUpdate({
+        sendCommentDataToModal({
+            elementToDelete: parent,
             parentId: parent.getAttribute("id"),
             isReply,
             replyId: "",
         });
     }
-    parent.remove();
 };
 const editComment = (event) => {
     const element = event.target;
@@ -270,7 +273,7 @@ export const createButton = ({ text, withIcon, btnStyle, }) => {
     if (text === "Reply")
         button.addEventListener("click", replyToComment);
     if (text === "Delete")
-        button.addEventListener("click", deleteComment);
+        button.addEventListener("click", activateModal);
     if (text === "Edit")
         button.addEventListener("click", editComment);
     return button;
