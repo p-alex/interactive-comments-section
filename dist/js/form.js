@@ -1,5 +1,6 @@
 import { createButton, createCommentElement } from "./comment/commentBox.js";
-import { addCommentLocalStorageUpdate, getDataFromLocalStorage, } from "./handleLocalStorage.js";
+import { addCommentLocalStorageUpdate } from "./handleLocalStorage/addCommentLocalStorageUpdate.js";
+import { getDataFromLocalStorage } from "./handleLocalStorage/getDataFromLocalStorage.js";
 import { mainContainer, mainFormContainer } from "./main.js";
 import { randomIdGenerator } from "./randomIdGenerator.js";
 const data = getDataFromLocalStorage();

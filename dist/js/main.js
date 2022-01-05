@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { createCommentElement } from "./comment/commentBox.js";
 import { appendFooter } from "./footer.js";
 import { addNewComment, appendForm, createForm } from "./form.js";
-import { getDataFromLocalStorage } from "./handleLocalStorage.js";
+import { getDataFromLocalStorage } from "./handleLocalStorage/getDataFromLocalStorage.js";
 export const mainContainer = document.querySelector(".container");
 export const mainFormContainer = document.querySelector(".form__container");
 // Getting data from data.json

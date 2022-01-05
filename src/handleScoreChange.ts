@@ -1,4 +1,4 @@
-import { getDataFromLocalStorage } from "./handleLocalStorage.js";
+import { getDataFromLocalStorage } from "./handleLocalStorage/getDataFromLocalStorage.js";
 
 export const handleScoreChange = ({
   elementToChange,

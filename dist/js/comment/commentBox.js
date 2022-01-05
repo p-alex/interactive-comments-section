@@ -1,4 +1,4 @@
-import { scoreCommentLocalStorageUpdate } from "../handleLocalStorage.js";
+import { scoreCommentLocalStorageUpdate } from "../handleLocalStorage/scoreCommentLocalStorageUpdate.js";
 import { handleScoreChange } from "../handleScoreChange.js";
 import { activateConfirmDeleteModal } from "./deleteComment.js";
 import { editComment } from "./editComment.js";

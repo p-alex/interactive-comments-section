@@ -1,4 +1,4 @@
-import { editCommentLocalStorageUpdate } from "../handleLocalStorage.js";
+import { editCommentLocalStorageUpdate } from "../handleLocalStorage/editCommentLocalStorageUpdate.js";
 import { createButton } from "./commentBox.js";
 
 let currentComment: Element | null = null;
