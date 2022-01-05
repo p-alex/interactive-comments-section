@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { createCommentElement } from "./commentBox.js";
+import { createCommentElement } from "./comment/commentBox.js";
 import { appendFooter } from "./footer.js";
 import { addNewComment, appendForm, createForm } from "./form.js";
 import { getDataFromLocalStorage } from "./handleLocalStorage.js";

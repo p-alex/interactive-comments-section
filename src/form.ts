@@ -1,4 +1,4 @@
-import { createButton, createCommentElement } from "./commentBox.js";
+import { createButton, createCommentElement } from "./comment/commentBox.js";
 import {
   addCommentLocalStorageUpdate,
   getDataFromLocalStorage,
@@ -24,10 +24,12 @@ export const createForm = ({
   form.classList.add("form");
   form.innerHTML = `
       <img src="./images/avatars/image-juliusomo.png" alt="" width="45" height="45" />
+      <div class="form__topFocusTrap"></div>
       <textarea class="form__text" aria-label="${textareaPlaceholder}" placeholder="${textareaPlaceholder}" id="form-content"></textarea>
       <div class="form__btnsContainer">
         <button class="form__submitBtn">${btnText}</button>
       </div>
+      <div class="form__bottomFocusTrap"></div>
     `;
 
   if (withCancel) {
@@ -41,6 +43,16 @@ export const createForm = ({
     });
     cancelBtn.addEventListener("click", () => form.remove());
     btnsContainer.appendChild(cancelBtn);
+
+    const topFocusTrap = form.querySelector(
+      ".form__topFocusTrap"
+    ) as HTMLDivElement;
+    topFocusTrap.tabIndex = 0;
+
+    const bottomFocusTrap = form.querySelector(
+      ".form__bottomFocusTrap"
+    ) as HTMLDivElement;
+    bottomFocusTrap.tabIndex = 0;
   }
 
   const formSubmitBtn = form.querySelector(
@@ -58,13 +70,14 @@ export const appendForm = ({
   formToAppend: Element;
 }) => {
   appendFormTo.appendChild(formToAppend);
+  applyFocusTrap(formToAppend);
 };
 
 export const addNewComment = (): void => {
   const formContent = mainFormContainer.querySelector(
     "#form-content"
   ) as HTMLTextAreaElement;
-  if (formContent.value) {
+  if (formContent.value.trim()) {
     const randomId = randomIdGenerator();
     const comment = createCommentElement(
       randomId,
@@ -97,4 +110,24 @@ export const addNewComment = (): void => {
     );
     formTextArea.value = "";
   }
+};
+
+const applyFocusTrap = (form: Element) => {
+  const topFocusTrap = form.querySelector(
+    ".form__topFocusTrap"
+  ) as HTMLDivElement;
+  const bottomFocusTrap = form.querySelector(
+    ".form__bottomFocusTrap"
+  ) as HTMLDivElement;
+  const firstFocusableElement = form.querySelector(
+    ".form__text"
+  ) as HTMLTextAreaElement;
+  const lastFocusableElement = form.querySelector(
+    ".normal"
+  ) as HTMLButtonElement;
+
+  topFocusTrap.addEventListener("focus", () => lastFocusableElement.focus());
+  bottomFocusTrap.addEventListener("focus", () =>
+    firstFocusableElement.focus()
+  );
 };

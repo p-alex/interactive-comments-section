@@ -1,4 +1,4 @@
-import { createButton, createCommentElement } from "./commentBox.js";
+import { createButton, createCommentElement } from "./comment/commentBox.js";
 import { addCommentLocalStorageUpdate, getDataFromLocalStorage, } from "./handleLocalStorage.js";
 import { mainContainer, mainFormContainer } from "./main.js";
 import { randomIdGenerator } from "./randomIdGenerator.js";
@@ -8,10 +8,12 @@ export const createForm = ({ textareaPlaceholder, btnText, submitFunc, withCance
     form.classList.add("form");
     form.innerHTML = `
       <img src="./images/avatars/image-juliusomo.png" alt="" width="45" height="45" />
+      <div class="form__topFocusTrap"></div>
       <textarea class="form__text" aria-label="${textareaPlaceholder}" placeholder="${textareaPlaceholder}" id="form-content"></textarea>
       <div class="form__btnsContainer">
         <button class="form__submitBtn">${btnText}</button>
       </div>
+      <div class="form__bottomFocusTrap"></div>
     `;
     if (withCancel) {
         const btnsContainer = form.querySelector(".form__btnsContainer");
@@ -22,6 +24,10 @@ export const createForm = ({ textareaPlaceholder, btnText, submitFunc, withCance
         });
         cancelBtn.addEventListener("click", () => form.remove());
         btnsContainer.appendChild(cancelBtn);
+        const topFocusTrap = form.querySelector(".form__topFocusTrap");
+        topFocusTrap.tabIndex = 0;
+        const bottomFocusTrap = form.querySelector(".form__bottomFocusTrap");
+        bottomFocusTrap.tabIndex = 0;
     }
     const formSubmitBtn = form.querySelector(".form__submitBtn");
     formSubmitBtn.addEventListener("click", submitFunc);
@@ -29,10 +35,11 @@ export const createForm = ({ textareaPlaceholder, btnText, submitFunc, withCance
 };
 export const appendForm = ({ appendFormTo, formToAppend, }) => {
     appendFormTo.appendChild(formToAppend);
+    applyFocusTrap(formToAppend);
 };
 export const addNewComment = () => {
     const formContent = mainFormContainer.querySelector("#form-content");
-    if (formContent.value) {
+    if (formContent.value.trim()) {
         const randomId = randomIdGenerator();
         const comment = createCommentElement(randomId, 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), formContent.value, [], data.currentUser, "normal");
         mainContainer.appendChild(comment);
@@ -48,4 +55,12 @@ export const addNewComment = () => {
         }, false, "");
         formTextArea.value = "";
     }
+};
+const applyFocusTrap = (form) => {
+    const topFocusTrap = form.querySelector(".form__topFocusTrap");
+    const bottomFocusTrap = form.querySelector(".form__bottomFocusTrap");
+    const firstFocusableElement = form.querySelector(".form__text");
+    const lastFocusableElement = form.querySelector(".normal");
+    topFocusTrap.addEventListener("focus", () => lastFocusableElement.focus());
+    bottomFocusTrap.addEventListener("focus", () => firstFocusableElement.focus());
 };

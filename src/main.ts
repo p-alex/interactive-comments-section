@@ -1,4 +1,4 @@
-import { createCommentElement } from "./commentBox.js";
+import { createCommentElement } from "./comment/commentBox.js";
 import { appendFooter } from "./footer.js";
 import { addNewComment, appendForm, createForm } from "./form.js";
 import { getDataFromLocalStorage } from "./handleLocalStorage.js";
