@@ -4,7 +4,7 @@ import { getDataFromLocalStorage } from "./handleLocalStorage/getDataFromLocalSt
 import { mainContainer, mainFormContainer } from "./main.js";
 import { randomIdGenerator } from "./randomIdGenerator.js";
 const data = getDataFromLocalStorage();
-export const createForm = ({ textareaPlaceholder, btnText, submitFunc, withCancel, }) => {
+export const createForm = ({ textareaPlaceholder, btnText, submitFunc, cancelFunc, withCancel, }) => {
     const form = document.createElement("div");
     form.classList.add("form");
     form.innerHTML = `
@@ -23,7 +23,7 @@ export const createForm = ({ textareaPlaceholder, btnText, submitFunc, withCance
             withIcon: false,
             btnStyle: "normal",
         });
-        cancelBtn.addEventListener("click", () => form.remove());
+        cancelBtn.addEventListener("click", () => cancelFunc({ formToRemove: form }));
         btnsContainer.appendChild(cancelBtn);
         const topFocusTrap = form.querySelector(".form__topFocusTrap");
         topFocusTrap.tabIndex = 0;

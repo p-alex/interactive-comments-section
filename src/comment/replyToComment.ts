@@ -14,6 +14,10 @@ export const replyToComment = (event: Event): void => {
       ".commentBox__container"
     )!;
 
+  const replyButton = commentContainer.querySelector(
+    "#reply-btn"
+  ) as HTMLButtonElement;
+
   const isTopLevelComment =
     !commentContainer.classList.contains("reply-comment");
 
@@ -35,6 +39,10 @@ export const replyToComment = (event: Event): void => {
         addReply({
           addReplyTo: isTopLevelComment ? repliesContainer : mainContainer!,
         }),
+      cancelFunc: ({ formToRemove }: { formToRemove: Element }) => {
+        formToRemove.remove();
+        replyButton.focus();
+      },
       withCancel: true,
     });
 

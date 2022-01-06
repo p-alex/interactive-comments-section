@@ -11,11 +11,13 @@ export const createForm = ({
   textareaPlaceholder,
   btnText,
   submitFunc,
+  cancelFunc,
   withCancel,
 }: {
   textareaPlaceholder: string;
   btnText: string;
   submitFunc: any;
+  cancelFunc: any;
   withCancel: boolean;
 }): Element => {
   const form = document.createElement("div") as HTMLDivElement;
@@ -39,7 +41,9 @@ export const createForm = ({
       withIcon: false,
       btnStyle: "normal",
     });
-    cancelBtn.addEventListener("click", () => form.remove());
+    cancelBtn.addEventListener("click", () =>
+      cancelFunc({ formToRemove: form })
+    );
     btnsContainer.appendChild(cancelBtn);
 
     const topFocusTrap = form.querySelector(

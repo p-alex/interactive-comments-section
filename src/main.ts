@@ -40,6 +40,8 @@ const main = (): void => {
         textareaPlaceholder: "Write a comment...",
         btnText: "Send",
         submitFunc: addNewComment,
+        cancelFunc: ({ formToRemove }: { formToRemove: Element }) =>
+          formToRemove.remove(),
         withCancel: false,
       }),
     });

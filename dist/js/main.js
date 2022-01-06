@@ -37,6 +37,7 @@ const main = () => {
                 textareaPlaceholder: "Write a comment...",
                 btnText: "Send",
                 submitFunc: addNewComment,
+                cancelFunc: ({ formToRemove }) => formToRemove.remove(),
                 withCancel: false,
             }),
         });

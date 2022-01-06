@@ -7,6 +7,7 @@ const data = getDataFromLocalStorage();
 export const replyToComment = (event) => {
     const element = event.target;
     const commentContainer = element.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".commentBox__container");
+    const replyButton = commentContainer.querySelector("#reply-btn");
     const isTopLevelComment = !commentContainer.classList.contains("reply-comment");
     const commentFormContainer = commentContainer.querySelector(".commentBox__replyFormContainer");
     const repliesContainer = commentContainer.querySelector(".commentBox__replyCommentsContainer");
@@ -18,6 +19,10 @@ export const replyToComment = (event) => {
             submitFunc: () => addReply({
                 addReplyTo: isTopLevelComment ? repliesContainer : mainContainer,
             }),
+            cancelFunc: ({ formToRemove }) => {
+                formToRemove.remove();
+                replyButton.focus();
+            },
             withCancel: true,
         });
         appendForm({
