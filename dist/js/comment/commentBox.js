@@ -95,7 +95,6 @@ export const createCommentElement = (id, score, userImage, username, createdAt, 
             });
         });
     }
-    // Adding Reply, Delete, and Edit buttons based on currentUser
     const commentBoxBtns = container.querySelector(".commentBox__btns");
     if (currentUser.username === username) {
         commentBoxBtns.appendChild(createButton({ text: "Delete", withIcon: true, btnStyle: "normal" }));
@@ -104,9 +103,7 @@ export const createCommentElement = (id, score, userImage, username, createdAt, 
     else {
         commentBoxBtns.appendChild(createButton({ text: "Reply", withIcon: true, btnStyle: "normal" }));
     }
-    // Adding comment text using textContent for security
     container.querySelector("#comment-text").textContent = content;
-    // Adding replies if the comment has any
     if (replies.length) {
         const repliesContainer = container.querySelector(".commentBox__replyCommentsContainer");
         replies.forEach((reply) => {
@@ -118,13 +115,11 @@ export const createCommentElement = (id, score, userImage, username, createdAt, 
 export const createButton = ({ text, withIcon, btnStyle, }) => {
     const button = document.createElement("button");
     button.classList.add("commentBox__btn");
-    // Applying button style
     button.classList.add(btnStyle === "fill" ? "fill" : "normal");
     if (text === "Delete")
         button.classList.add("delete-btn");
     button.title = text;
     button.id = `${text.toLowerCase()}-btn`;
-    // Add icon if true
     if (withIcon) {
         button.innerHTML = `
     <img src="./images/icon-${text.toLowerCase()}.svg" alt="" width="15" height="15" />
@@ -134,8 +129,6 @@ export const createButton = ({ text, withIcon, btnStyle, }) => {
     else {
         button.innerText = text;
     }
-    // Buttons with text 'reply', 'delete' and 'edit' have functions
-    // assigned by default
     if (text === "Reply")
         button.addEventListener("click", replyToComment);
     if (text === "Delete")

@@ -1,5 +1,4 @@
 import { updateLocalStorage } from "./updateLocalStorage.js";
-// -------------------DELETE COMMENT FROM LOCAL STORAGE-------------------
 export const deleteCommentLocalStorageUpdate = ({ parentId, isReply, replyId, }) => {
     const data = JSON.parse(localStorage.getItem("data"));
     if (isReply) {

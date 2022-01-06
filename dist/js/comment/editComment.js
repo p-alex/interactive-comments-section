@@ -6,7 +6,6 @@ export const editComment = (event) => {
     const commentContainer = element.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".commentBox__container");
     currentComment = commentContainer;
     const commentTextContainer = commentContainer.querySelector(".commentBox__text");
-    //Hide comment text
     const commentText = commentTextContainer.querySelector("#comment-text");
     commentText.style.display = "none";
     const editForm = createEditForm(commentContainer, commentTextContainer);
@@ -55,10 +54,8 @@ const createEditForm = (commentContainer, commentTextContainer) => {
     const textarea = editForm.querySelector(".commentBox__textarea");
     const isEditModeBtns = commentContainer.querySelector(".commentBox__editModeBtnsContainer");
     if (!isEditModeBtns) {
-        // Creating container for btns
         const editModeBtnsContainer = document.createElement("div");
         editModeBtnsContainer.classList.add("commentBox__editModeBtnsContainer");
-        // Creating the buttons
         const updateBtn = createButton({
             text: "Update",
             withIcon: false,
@@ -73,7 +70,6 @@ const createEditForm = (commentContainer, commentTextContainer) => {
         editModeBtnsContainer.appendChild(updateBtn);
         editModeBtnsContainer.appendChild(cancelBtn);
         editForm.appendChild(editModeBtnsContainer);
-        // Adding event listeners to buttons
         updateBtn.addEventListener("click", () => {
             updateComment(commentContainer, commentText, textarea.value);
             cancelEditMode(editForm, commentText);

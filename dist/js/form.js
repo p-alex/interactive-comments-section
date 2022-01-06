@@ -44,7 +44,6 @@ export const addNewComment = () => {
         const randomId = randomIdGenerator();
         const comment = createCommentElement(randomId, 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), formContent.value, [], data.currentUser, "normal");
         mainContainer.appendChild(comment);
-        // Reset text area
         const formTextArea = mainFormContainer.querySelector(".form__text");
         addCommentLocalStorageUpdate({
             id: randomId,

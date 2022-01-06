@@ -13,7 +13,6 @@ import { addNewComment, appendForm, createForm } from "./form.js";
 import { getDataFromLocalStorage } from "./handleLocalStorage/getDataFromLocalStorage.js";
 export const mainContainer = document.querySelector(".container");
 export const mainFormContainer = document.querySelector(".form__container");
-// Getting data from data.json
 const getData = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (localStorage.getItem("data") === null) {

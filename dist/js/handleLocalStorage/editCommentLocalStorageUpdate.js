@@ -1,5 +1,4 @@
 import { updateLocalStorage } from "./updateLocalStorage.js";
-// -------------------EDIT COMMENT FROM LOCAL STORAGE-------------------
 export const editCommentLocalStorageUpdate = ({ parentId, isReply, replyId, content, }) => {
     const data = JSON.parse(localStorage.getItem("data"));
     if (isReply) {

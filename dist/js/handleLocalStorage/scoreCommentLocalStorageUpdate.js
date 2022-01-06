@@ -1,6 +1,5 @@
 import { getDataFromLocalStorage } from "./getDataFromLocalStorage.js";
 import { updateLocalStorage } from "./updateLocalStorage.js";
-// -------------------UPDATE COMMENT SCORE AND SAVE THE CHANGES TO LOCAL STORAGE-------------------
 export const scoreCommentLocalStorageUpdate = ({ scoreType, commentId, isReply, }) => {
     const data = getDataFromLocalStorage();
     const { comments, currentUser } = data;
