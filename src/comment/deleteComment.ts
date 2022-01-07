@@ -2,7 +2,9 @@ import { sendCommentDataToModal, showModal } from "../confirmDeleteModal.js";
 
 export const activateConfirmDeleteModal = (event: Event): void => {
   showModal();
+
   const element = <Element>event.target;
+
   const parent = <HTMLDivElement>(
     element!.parentElement!.parentElement!.parentElement!.parentElement!.parentElement!.closest(
       ".commentBox__container"

@@ -1,4 +1,5 @@
 import { dataInterface } from "../interfaces/index";
+import { getDataFromLocalStorage } from "./getDataFromLocalStorage.js";
 import { updateLocalStorage } from "./updateLocalStorage.js";
 
 // -------------------EDIT COMMENT FROM LOCAL STORAGE-------------------
@@ -13,7 +14,7 @@ export const editCommentLocalStorageUpdate = ({
   replyId: string;
   content: string;
 }): void => {
-  const data: dataInterface = JSON.parse(localStorage.getItem("data")!);
+  const data: dataInterface = getDataFromLocalStorage()!;
   if (isReply) {
     const newComments = data.comments.map((comment) => {
       if (comment.id === parentId) {

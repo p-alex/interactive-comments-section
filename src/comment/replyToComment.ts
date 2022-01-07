@@ -58,6 +58,10 @@ export const replyToComment = (event: Event): void => {
     const addReply = ({ addReplyTo }: { addReplyTo: Element }): void => {
       const replyParent = addReplyTo.parentElement?.parentElement;
 
+      const replyingTo = commentContainer.querySelector(
+        ".commentBox__username"
+      ) as HTMLParagraphElement;
+
       if (textarea.value) {
         const randomId = randomIdGenerator();
         const comment = createCommentElement(
@@ -72,18 +76,21 @@ export const replyToComment = (event: Event): void => {
           "reply"
         );
         addReplyTo.appendChild(comment);
-        addCommentLocalStorageUpdate(
-          {
-            id: randomId,
-            content: textarea.value,
-            createdAt: new Date().toLocaleDateString(),
-            user: data.currentUser,
-            replies: [],
-            score: 0,
-          },
-          true,
-          replyParent?.getAttribute("id")!
-        );
+
+        const newReplyData = {
+          id: randomId,
+          content: textarea.value,
+          createdAt: new Date().toLocaleDateString(),
+          replyingTo: replyingTo.innerText,
+          user: data.currentUser,
+          score: 0,
+        };
+
+        addCommentLocalStorageUpdate({
+          commentData: newReplyData,
+          isReply: true,
+          index: replyParent!.getAttribute("id")!,
+        });
         form.remove();
       }
     };

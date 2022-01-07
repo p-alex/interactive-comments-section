@@ -21,7 +21,6 @@ export const createCommentElement = (id, score, userImage, username, createdAt, 
             <img src="./images/icon-minus.svg" alt="" width='10' height='3' />
           </button>
       </div>
-      
       <div class="commentBox__body">
           <div class="commentBox__topBar">
             <div class="commentBox__userDetails">

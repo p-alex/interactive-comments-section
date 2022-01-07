@@ -45,14 +45,19 @@ export const addNewComment = () => {
         const comment = createCommentElement(randomId, 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), formContent.value, [], data.currentUser, "normal");
         mainContainer.appendChild(comment);
         const formTextArea = mainFormContainer.querySelector(".form__text");
-        addCommentLocalStorageUpdate({
+        const newCommentData = {
             id: randomId,
             content: formContent.value,
             createdAt: new Date().toLocaleDateString(),
             user: data.currentUser,
             replies: [],
             score: 0,
-        }, false, "");
+        };
+        addCommentLocalStorageUpdate({
+            commentData: newCommentData,
+            isReply: false,
+            index: "",
+        });
         formTextArea.value = "";
     }
 };

@@ -34,18 +34,24 @@ export const replyToComment = (event) => {
         const addReply = ({ addReplyTo }) => {
             var _a;
             const replyParent = (_a = addReplyTo.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement;
+            const replyingTo = commentContainer.querySelector(".commentBox__username");
             if (textarea.value) {
                 const randomId = randomIdGenerator();
                 const comment = createCommentElement(randomId, 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), textarea.value, [], data.currentUser, "reply");
                 addReplyTo.appendChild(comment);
-                addCommentLocalStorageUpdate({
+                const newReplyData = {
                     id: randomId,
                     content: textarea.value,
                     createdAt: new Date().toLocaleDateString(),
+                    replyingTo: replyingTo.innerText,
                     user: data.currentUser,
-                    replies: [],
                     score: 0,
-                }, true, replyParent === null || replyParent === void 0 ? void 0 : replyParent.getAttribute("id"));
+                };
+                addCommentLocalStorageUpdate({
+                    commentData: newReplyData,
+                    isReply: true,
+                    index: replyParent.getAttribute("id"),
+                });
                 form.remove();
             }
         };

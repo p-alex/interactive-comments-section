@@ -14,7 +14,6 @@
   padding: 25px;
   margin-bottom: 20px;
 }
-
 .commentBox__rate {
   display: inline-flex;
   flex-direction: column;
@@ -103,7 +102,6 @@
   border-radius: 5px;
   font-weight: normal;
 }
-
 .commentBox__btn.normal {
   color: hsl(238, 40%, 52%);
   background: none;
@@ -156,7 +154,7 @@
   position: relative;
   width: 5px;
   background-color: #e8e9ed;
-  margin: 0 40px;
+  margin: 0 44px;
 }
 @keyframes fadeIn {
   from {

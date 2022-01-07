@@ -1,6 +1,7 @@
+import { getDataFromLocalStorage } from "./getDataFromLocalStorage.js";
 import { updateLocalStorage } from "./updateLocalStorage.js";
 export const editCommentLocalStorageUpdate = ({ parentId, isReply, replyId, content, }) => {
-    const data = JSON.parse(localStorage.getItem("data"));
+    const data = getDataFromLocalStorage();
     if (isReply) {
         const newComments = data.comments.map((comment) => {
             if (comment.id === parentId) {

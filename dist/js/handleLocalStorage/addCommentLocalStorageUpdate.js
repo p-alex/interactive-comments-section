@@ -1,28 +1,12 @@
 import { getDataFromLocalStorage } from "./getDataFromLocalStorage.js";
 import { updateLocalStorage } from "./updateLocalStorage.js";
-export const addCommentLocalStorageUpdate = (commentData, isReply, index) => {
-    const { id, content, createdAt, user, replies, score } = commentData;
+export const addCommentLocalStorageUpdate = ({ commentData, isReply, index, }) => {
     const data = getDataFromLocalStorage();
-    const newComment = {
-        id,
-        content,
-        createdAt,
-        user,
-        replies,
-        score,
-    };
     if (isReply) {
-        const newReply = {
-            id,
-            content,
-            createdAt,
-            replyingTo: "",
-            score,
-            user,
-        };
+        const newReplyData = commentData;
         const newComments = data.comments.map((comment) => {
             if (comment.id === index) {
-                comment.replies.push(newReply);
+                comment.replies.push(newReplyData);
                 return comment;
             }
             return comment;
@@ -34,8 +18,10 @@ export const addCommentLocalStorageUpdate = (commentData, isReply, index) => {
         console.log("Added reply to local storage!");
         return;
     }
-    const newComments = [...data.comments];
-    newComments.push(newComment);
-    updateLocalStorage({ comments: newComments, currentUser: data.currentUser });
+    const newCommentData = commentData;
+    updateLocalStorage({
+        comments: [...data.comments, newCommentData],
+        currentUser: data.currentUser,
+    });
     console.log("Added comment to local storage!");
 };

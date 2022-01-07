@@ -1,6 +1,10 @@
 import { scoreCommentLocalStorageUpdate } from "../handleLocalStorage/scoreCommentLocalStorageUpdate.js";
 import { handleScoreChange } from "../handleScoreChange.js";
-import { replyInterface, userInterface } from "../interfaces/index";
+import {
+  replyInterface,
+  scoreInterface,
+  userInterface,
+} from "../interfaces/index";
 import { activateConfirmDeleteModal } from "./deleteComment.js";
 import { editComment } from "./editComment.js";
 import { replyToComment } from "./replyToComment.js";
@@ -31,7 +35,6 @@ export const createCommentElement = (
             <img src="./images/icon-minus.svg" alt="" width='10' height='3' />
           </button>
       </div>
-      
       <div class="commentBox__body">
           <div class="commentBox__topBar">
             <div class="commentBox__userDetails">
@@ -60,19 +63,23 @@ export const createCommentElement = (
   const rateContainer = container.querySelector(
     ".commentBox__rate"
   ) as HTMLDivElement;
+
   const upvoteBtn = rateContainer?.querySelector(
     "#upvote-btn"
   ) as HTMLButtonElement;
+
   const downvoteBtn = rateContainer.querySelector(
     "#downvote-btn"
   ) as HTMLButtonElement;
+
   const scoreParagraph = rateContainer.querySelector(
     ".commentBox__likes"
   ) as HTMLParagraphElement;
+
   const commentUsername = container.querySelector(".commentBox__username")
     ?.textContent!;
 
-  currentUser.scored.forEach((score) => {
+  currentUser.scored.forEach((score: scoreInterface): void => {
     if (score.id === id) {
       if (score.scoreType === "upvote") {
         upvoteBtn.classList.add("btn-active");
@@ -86,7 +93,7 @@ export const createCommentElement = (
     upvoteBtn.disabled = true;
     downvoteBtn.disabled = true;
   } else {
-    upvoteBtn.addEventListener("click", () => {
+    upvoteBtn.addEventListener("click", (): void => {
       handleScoreChange({
         elementToChange: scoreParagraph,
         commentId: container.id,
@@ -102,7 +109,7 @@ export const createCommentElement = (
       });
     });
 
-    downvoteBtn.addEventListener("click", () => {
+    downvoteBtn.addEventListener("click", (): void => {
       handleScoreChange({
         elementToChange: scoreParagraph,
         commentId: container.id,
@@ -123,6 +130,7 @@ export const createCommentElement = (
   const commentBoxBtns = container.querySelector(
     ".commentBox__btns"
   ) as HTMLDivElement;
+
   if (currentUser.username === username) {
     commentBoxBtns!.appendChild(
       createButton({ text: "Delete", withIcon: true, btnStyle: "normal" })

@@ -5,10 +5,12 @@ let currentComment: Element | null = null;
 
 export const editComment = (event: Event): void => {
   const element = <Element>event.target;
+
   const commentContainer: HTMLElement =
     element!.parentElement!.parentElement!.parentElement!.parentElement!.parentElement!.closest(
       ".commentBox__container"
     )!;
+
   currentComment = commentContainer;
 
   const commentTextContainer = commentContainer!.querySelector(
@@ -18,6 +20,7 @@ export const editComment = (event: Event): void => {
   //Hide comment text
   const commentText: HTMLParagraphElement =
     commentTextContainer.querySelector("#comment-text")!;
+
   commentText.style.display = "none";
 
   const editForm = createEditForm(commentContainer, commentTextContainer);
@@ -27,6 +30,7 @@ export const editComment = (event: Event): void => {
   const editFormTextarea = editForm.querySelector(
     ".commentBox__textarea"
   ) as HTMLTextAreaElement;
+
   editFormTextarea.focus();
 };
 
@@ -37,8 +41,11 @@ const cancelEditMode = (
   const editBtn = currentComment?.querySelector(
     "#edit-btn"
   ) as HTMLButtonElement;
+
   editForm.remove();
+
   commentText.style.removeProperty("display");
+
   editBtn.focus();
 };
 
@@ -48,7 +55,9 @@ const updateComment = (
   editedText: string
 ) => {
   commentText.textContent = editedText;
+
   const isReply = commentContainer.classList.contains("reply-comment");
+
   if (isReply) {
     const parentCommentOfTheReply =
       commentContainer.parentElement?.parentElement?.parentElement;

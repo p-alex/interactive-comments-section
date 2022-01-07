@@ -98,18 +98,22 @@ export const addNewComment = (): void => {
     const formTextArea = mainFormContainer.querySelector(
       ".form__text"
     ) as HTMLTextAreaElement;
-    addCommentLocalStorageUpdate(
-      {
-        id: randomId,
-        content: formContent.value,
-        createdAt: new Date().toLocaleDateString(),
-        user: data.currentUser,
-        replies: [],
-        score: 0,
-      },
-      false,
-      ""
-    );
+
+    const newCommentData = {
+      id: randomId,
+      content: formContent.value,
+      createdAt: new Date().toLocaleDateString(),
+      user: data.currentUser,
+      replies: [],
+      score: 0,
+    };
+
+    addCommentLocalStorageUpdate({
+      commentData: newCommentData,
+      isReply: false,
+      index: "",
+    });
+
     formTextArea.value = "";
   }
 };
