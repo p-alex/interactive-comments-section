@@ -6,7 +6,7 @@ export const dateConverter = (datePosted: number): string => {
   if (result >= 0 && result < 1) {
     return "Today";
   }
-  if (result < 30) {
+  if (result >= 1 && result < 30) {
     const convertedDate = Math.floor(result);
     return `${convertedDate} ${convertedDate === 1 ? "day" : "days"} ago`;
   }
