@@ -81,17 +81,18 @@ export const addNewComment = (): void => {
   ) as HTMLTextAreaElement;
   if (formContent.value.trim()) {
     const randomId = randomIdGenerator();
-    const comment = createCommentElement(
-      randomId,
-      0,
-      data.currentUser.image.png,
-      data.currentUser.username,
-      new Date().toLocaleDateString(),
-      formContent.value,
-      [],
-      data.currentUser,
-      "normal"
-    );
+
+    const comment = createCommentElement({
+      id: randomId,
+      score: 0,
+      userImage: data.currentUser.image.png,
+      username: data.currentUser.username,
+      createdAt: Date.now(),
+      content: formContent.value,
+      replies: [],
+      currentUser: data.currentUser,
+      typeOfComment: "normal",
+    });
     mainContainer.appendChild(comment);
 
     // Reset text area
@@ -102,7 +103,7 @@ export const addNewComment = (): void => {
     const newCommentData = {
       id: randomId,
       content: formContent.value,
-      createdAt: new Date().toLocaleDateString(),
+      createdAt: Date.now(),
       user: data.currentUser,
       replies: [],
       score: 0,

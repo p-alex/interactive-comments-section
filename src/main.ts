@@ -55,17 +55,17 @@ const appendComments = (
 ) => {
   comments.forEach((comment: commentsInterface): void => {
     mainContainer.appendChild(
-      createCommentElement(
-        comment.id,
-        comment.score,
-        comment.user.image.png,
-        comment.user.username,
-        comment.createdAt,
-        comment.content,
-        comment.replies,
+      createCommentElement({
+        id: comment.id,
+        score: comment.score,
+        userImage: comment.user.image.png,
+        username: comment.user.username,
+        createdAt: comment.createdAt,
+        content: comment.content,
+        replies: comment.replies,
         currentUser,
-        "normal"
-      )
+        typeOfComment: "normal",
+      })
     );
   });
 };

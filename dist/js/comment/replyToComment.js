@@ -35,14 +35,25 @@ export const replyToComment = (event) => {
             var _a;
             const replyParent = (_a = addReplyTo.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement;
             const replyingTo = commentContainer.querySelector(".commentBox__username");
+            console.log(data.currentUser);
             if (textarea.value) {
                 const randomId = randomIdGenerator();
-                const comment = createCommentElement(randomId, 0, data.currentUser.image.png, data.currentUser.username, new Date().toLocaleDateString(), textarea.value, [], data.currentUser, "reply");
+                const comment = createCommentElement({
+                    id: randomId,
+                    score: 0,
+                    userImage: data.currentUser.image.png,
+                    username: data.currentUser.username,
+                    createdAt: Date.now(),
+                    content: textarea.value,
+                    replies: [],
+                    currentUser: data.currentUser,
+                    typeOfComment: "reply",
+                });
                 addReplyTo.appendChild(comment);
                 const newReplyData = {
                     id: randomId,
                     content: textarea.value,
-                    createdAt: new Date().toLocaleDateString(),
+                    createdAt: Date.now(),
                     replyingTo: replyingTo.innerText,
                     user: data.currentUser,
                     score: 0,

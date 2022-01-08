@@ -1,9 +1,10 @@
 import { scoreCommentLocalStorageUpdate } from "../handleLocalStorage/scoreCommentLocalStorageUpdate.js";
 import { handleScoreChange } from "../handleScoreChange.js";
+import { dateConverter } from "../utils/dateConverter.js";
 import { activateConfirmDeleteModal } from "./deleteComment.js";
 import { editComment } from "./editComment.js";
 import { replyToComment } from "./replyToComment.js";
-export const createCommentElement = (id, score, userImage, username, createdAt, content, replies, currentUser, typeOfComment) => {
+export const createCommentElement = ({ id, score, userImage, username, createdAt, content, replies, currentUser, typeOfComment, }) => {
     var _a;
     const container = document.createElement("div");
     container.classList.add("commentBox__container");
@@ -27,7 +28,7 @@ export const createCommentElement = (id, score, userImage, username, createdAt, 
                 <img class="commentBox__profilePicture" src="${userImage}" alt="" width="35" height="35"/>
                 <div class='commentBox__usernameAndDate'>
                   <p class="commentBox__username">${username}</p>
-                  <p class="commentBox__commentDate">${createdAt}</p>
+                  <p class="commentBox__commentDate">${dateConverter(createdAt)}</p>
                 </div>
             </div>
             <div class="commentBox__btns"></div>
@@ -106,7 +107,17 @@ export const createCommentElement = (id, score, userImage, username, createdAt, 
     if (replies.length) {
         const repliesContainer = container.querySelector(".commentBox__replyCommentsContainer");
         replies.forEach((reply) => {
-            repliesContainer.appendChild(createCommentElement(reply.id, reply.score, reply.user.image.png, reply.user.username, reply.createdAt, reply.content, [], currentUser, "reply"));
+            repliesContainer.appendChild(createCommentElement({
+                id: reply.id,
+                score: reply.score,
+                userImage: reply.user.image.png,
+                username: reply.user.username,
+                createdAt: reply.createdAt,
+                content: reply.content,
+                replies: [],
+                currentUser,
+                typeOfComment: "reply",
+            }));
         });
     }
     return container;

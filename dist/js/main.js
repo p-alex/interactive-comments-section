@@ -45,7 +45,17 @@ const main = () => {
 };
 const appendComments = (comments, currentUser) => {
     comments.forEach((comment) => {
-        mainContainer.appendChild(createCommentElement(comment.id, comment.score, comment.user.image.png, comment.user.username, comment.createdAt, comment.content, comment.replies, currentUser, "normal"));
+        mainContainer.appendChild(createCommentElement({
+            id: comment.id,
+            score: comment.score,
+            userImage: comment.user.image.png,
+            username: comment.user.username,
+            createdAt: comment.createdAt,
+            content: comment.content,
+            replies: comment.replies,
+            currentUser,
+            typeOfComment: "normal",
+        }));
     });
 };
 const appendErrorMessage = ({ message }) => {

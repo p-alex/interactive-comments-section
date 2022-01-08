@@ -6,7 +6,7 @@ export interface dataInterface {
 export interface commentsInterface {
   id: string;
   content: string;
-  createdAt: string;
+  createdAt: number;
   replies: replyInterface[];
   score: number;
   user: userInterface;
@@ -29,7 +29,7 @@ export interface scoreInterface {
 export interface replyInterface {
   id: string;
   content: string;
-  createdAt: string;
+  createdAt: number;
   replyingTo: string;
   score: number;
   user: userInterface;

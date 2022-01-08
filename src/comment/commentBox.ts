@@ -5,21 +5,32 @@ import {
   scoreInterface,
   userInterface,
 } from "../interfaces/index";
+import { dateConverter } from "../utils/dateConverter.js";
 import { activateConfirmDeleteModal } from "./deleteComment.js";
 import { editComment } from "./editComment.js";
 import { replyToComment } from "./replyToComment.js";
 
-export const createCommentElement = (
-  id: string,
-  score: number,
-  userImage: string,
-  username: string,
-  createdAt: string,
-  content: string,
-  replies: replyInterface[],
-  currentUser: userInterface,
-  typeOfComment: "normal" | "reply"
-): HTMLDivElement => {
+export const createCommentElement = ({
+  id,
+  score,
+  userImage,
+  username,
+  createdAt,
+  content,
+  replies,
+  currentUser,
+  typeOfComment,
+}: {
+  id: string;
+  score: number;
+  userImage: string;
+  username: string;
+  createdAt: number;
+  content: string;
+  replies: replyInterface[];
+  currentUser: userInterface;
+  typeOfComment: "normal" | "reply";
+}): HTMLDivElement => {
   const container = document.createElement("div") as HTMLDivElement;
   container.classList.add("commentBox__container");
   container.id = id;
@@ -41,7 +52,9 @@ export const createCommentElement = (
                 <img class="commentBox__profilePicture" src="${userImage}" alt="" width="35" height="35"/>
                 <div class='commentBox__usernameAndDate'>
                   <p class="commentBox__username">${username}</p>
-                  <p class="commentBox__commentDate">${createdAt}</p>
+                  <p class="commentBox__commentDate">${dateConverter(
+                    createdAt
+                  )}</p>
                 </div>
             </div>
             <div class="commentBox__btns"></div>
@@ -154,17 +167,17 @@ export const createCommentElement = (
     ) as HTMLDivElement;
     replies.forEach((reply: replyInterface): void => {
       repliesContainer.appendChild(
-        createCommentElement(
-          reply.id,
-          reply.score,
-          reply.user.image.png,
-          reply.user.username,
-          reply.createdAt,
-          reply.content,
-          [],
+        createCommentElement({
+          id: reply.id,
+          score: reply.score,
+          userImage: reply.user.image.png,
+          username: reply.user.username,
+          createdAt: reply.createdAt,
+          content: reply.content,
+          replies: [],
           currentUser,
-          "reply"
-        )
+          typeOfComment: "reply",
+        })
       );
     });
   }
