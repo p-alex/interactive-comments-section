@@ -96,6 +96,10 @@
   font-weight: 700;
   padding: 10px;
 }
+.commentBox__btn.update-btn {
+  text-transform: uppercase;
+  padding: 12px 25px;
+}
 .commentBox__btn.fill {
   background-color: hsl(238, 40%, 52%);
   color: white;

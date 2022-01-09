@@ -61,11 +61,13 @@ const createEditForm = (commentContainer, commentTextContainer) => {
             withIcon: false,
             btnStyle: "fill",
         });
+        updateBtn.classList.add("update-btn");
         const cancelBtn = createButton({
             text: "Cancel",
             withIcon: false,
             btnStyle: "normal",
         });
+        cancelBtn.classList.add("cancel-btn");
         cancelBtn.classList.add("cancel-btn");
         editModeBtnsContainer.appendChild(updateBtn);
         editModeBtnsContainer.appendChild(cancelBtn);

@@ -1,22 +1,40 @@
+// This function converts dates into 'x minutes ago', 'x months ago', etc...
+// Date posted should be in 'Date.now()' format
+
 export const dateConverter = (datePosted: number): string => {
   const currentDate = Date.now();
   const diff = currentDate - datePosted;
   const msInADay = 1000 * 3600 * 24;
-  const result = Math.floor(diff / msInADay);
-  if (result >= 0 && result < 1) {
-    return "Today";
+
+  const resultInDays = diff / msInADay;
+  const resultInHours = resultInDays * 24;
+  const resultInMinutes = resultInHours * 60;
+  const resultInMonths = resultInDays / 30;
+  const resultInYears = resultInDays / 365;
+
+  if (resultInMinutes < 1) {
+    return "Just now";
   }
-  if (result >= 1 && result < 30) {
-    const convertedDate = Math.floor(result);
+  if (resultInMinutes >= 1 && resultInMinutes < 60) {
+    const convertedDate = Math.floor(resultInMinutes);
+    return `${convertedDate} ${convertedDate === 1 ? "minute" : "minutes"} ago`;
+  }
+  if (resultInHours >= 1 && resultInHours < 24) {
+    const convertedDate = Math.floor(resultInHours);
+    return `${convertedDate} ${convertedDate === 1 ? "hour" : "hours"} ago`;
+  }
+  if (resultInDays >= 1 && resultInDays < 30) {
+    const convertedDate = Math.floor(resultInDays);
     return `${convertedDate} ${convertedDate === 1 ? "day" : "days"} ago`;
   }
-  if (result >= 30 && result < 365) {
-    const convertedDate = Math.floor(result / 30);
+  if (resultInMonths >= 1 && resultInMonths < 12) {
+    const convertedDate = Math.floor(resultInMonths);
     return `${convertedDate} ${convertedDate === 1 ? "month" : "months"} ago`;
   }
-  if (result >= 365) {
-    const convertedDate = Math.floor(result / 365);
+  if (resultInYears >= 1) {
+    const convertedDate = Math.floor(resultInYears);
     return `${convertedDate} ${convertedDate === 1 ? "year" : "years"} ago`;
   }
+
   return "";
 };
