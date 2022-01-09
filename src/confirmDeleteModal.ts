@@ -1,4 +1,4 @@
-import { deleteCommentLocalStorageUpdate } from "./handleLocalStorage/deleteCommentLocalStorageUpdate.js";
+import { deleteCommentLocalStorageUpdate } from "./handleLocalStorage/deleteCommentLocalStorageUpdate";
 
 let commentData: {
   elementToDelete: HTMLDivElement;

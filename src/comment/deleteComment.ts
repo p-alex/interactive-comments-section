@@ -1,4 +1,4 @@
-import { sendCommentDataToModal, showModal } from "../confirmDeleteModal.js";
+import { sendCommentDataToModal, showModal } from "../confirmDeleteModal";
 
 export const activateConfirmDeleteModal = (event: Event): void => {
   showModal();

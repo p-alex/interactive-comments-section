@@ -1,6 +1,6 @@
 import { dataInterface } from "../interfaces/index";
-import { getDataFromLocalStorage } from "./getDataFromLocalStorage.js";
-import { updateLocalStorage } from "./updateLocalStorage.js";
+import { getDataFromLocalStorage } from "./getDataFromLocalStorage";
+import { updateLocalStorage } from "./updateLocalStorage";
 
 // -------------------EDIT COMMENT FROM LOCAL STORAGE-------------------
 export const editCommentLocalStorageUpdate = ({

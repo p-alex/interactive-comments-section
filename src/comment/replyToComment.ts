@@ -1,9 +1,9 @@
-import { appendForm, createForm } from "../form.js";
-import { addCommentLocalStorageUpdate } from "../handleLocalStorage/addCommentLocalStorageUpdate.js";
-import { getDataFromLocalStorage } from "../handleLocalStorage/getDataFromLocalStorage.js";
+import { appendForm, createForm } from "../form";
+import { addCommentLocalStorageUpdate } from "../handleLocalStorage/addCommentLocalStorageUpdate";
+import { getDataFromLocalStorage } from "../handleLocalStorage/getDataFromLocalStorage";
 import { dataInterface } from "../interfaces/index";
-import { randomIdGenerator } from "../randomIdGenerator.js";
-import { createCommentElement } from "./commentBox.js";
+import { randomIdGenerator } from "../randomIdGenerator";
+import { createCommentElement } from "./commentBox";
 
 const data: dataInterface = getDataFromLocalStorage()!;
 

@@ -1,14 +1,14 @@
-import { scoreCommentLocalStorageUpdate } from "../handleLocalStorage/scoreCommentLocalStorageUpdate.js";
-import { handleScoreChange } from "../handleScoreChange.js";
+import { scoreCommentLocalStorageUpdate } from "../handleLocalStorage/scoreCommentLocalStorageUpdate";
+import { handleScoreChange } from "../handleScoreChange";
 import {
   replyInterface,
   scoreInterface,
   userInterface,
 } from "../interfaces/index";
-import { dateConverter } from "../utils/dateConverter.js";
-import { activateConfirmDeleteModal } from "./deleteComment.js";
-import { editComment } from "./editComment.js";
-import { replyToComment } from "./replyToComment.js";
+import { dateConverter } from "../utils/dateConverter";
+import { activateConfirmDeleteModal } from "./deleteComment";
+import { editComment } from "./editComment";
+import { replyToComment } from "./replyToComment";
 
 export const createCommentElement = ({
   id,

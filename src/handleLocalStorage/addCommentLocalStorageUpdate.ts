@@ -3,8 +3,8 @@ import {
   dataInterface,
   replyInterface,
 } from "../interfaces/index";
-import { getDataFromLocalStorage } from "./getDataFromLocalStorage.js";
-import { updateLocalStorage } from "./updateLocalStorage.js";
+import { getDataFromLocalStorage } from "./getDataFromLocalStorage";
+import { updateLocalStorage } from "./updateLocalStorage";
 
 // -------------------ADD COMMENT TO LOCAL STORAGE-------------------
 export const addCommentLocalStorageUpdate = ({

@@ -1,5 +1,5 @@
 // This function converts dates into 'x minutes ago', 'x months ago', etc...
-// Date posted should be in 'Date.now()' format
+// datePosted parameter should be in 'Date.now()' format
 
 export const dateConverter = (datePosted: number): string => {
   const currentDate = Date.now();

@@ -1,7 +1,7 @@
-import { createCommentElement } from "./comment/commentBox.js";
-import { appendFooter } from "./footer.js";
-import { addNewComment, appendForm, createForm } from "./form.js";
-import { getDataFromLocalStorage } from "./handleLocalStorage/getDataFromLocalStorage.js";
+import { createCommentElement } from "./comment/commentBox";
+import { appendFooter } from "./footer";
+import { addNewComment, appendForm, createForm } from "./form";
+import { getDataFromLocalStorage } from "./handleLocalStorage/getDataFromLocalStorage";
 import {
   commentsInterface,
   dataInterface,
