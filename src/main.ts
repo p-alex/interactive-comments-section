@@ -1,3 +1,11 @@
+import "./styles/CommentBox.css";
+import "./styles/ConfirmDelete.css";
+import "./styles/Container.css";
+import "./styles/Footer.css";
+import "./styles/Form.css";
+import "./styles/globals.css";
+import "./styles/PageWrapper.css";
+
 import { createCommentElement } from "./comment/commentBox";
 import { appendFooter } from "./footer";
 import { addNewComment, appendForm, createForm } from "./form";
@@ -29,6 +37,8 @@ const getData = async (): Promise<void> => {
     appendErrorMessage({ message: err.message });
   }
 };
+
+console.log("hello");
 
 const main = (): void => {
   const data: dataInterface | null = getDataFromLocalStorage();

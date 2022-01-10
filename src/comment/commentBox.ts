@@ -78,11 +78,11 @@ export const createCommentElement = ({
   ) as HTMLDivElement;
 
   const upvoteBtn = rateContainer?.querySelector(
-    "#upvote-btn"
+    `#upvote-btn`
   ) as HTMLButtonElement;
 
   const downvoteBtn = rateContainer.querySelector(
-    "#downvote-btn"
+    `#downvote-btn`
   ) as HTMLButtonElement;
 
   const scoreParagraph = rateContainer.querySelector(
