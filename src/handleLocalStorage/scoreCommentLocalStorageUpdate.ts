@@ -31,6 +31,7 @@ export const scoreCommentLocalStorageUpdate = ({
     if (isReply) {
       const newComments = comments.map((comment) => {
         comment.replies.forEach((reply) => {
+          if (comment.user.username === currentUser.username) return reply;
           if (reply.id === commentId) {
             reply.score += 2;
             return;
@@ -42,6 +43,7 @@ export const scoreCommentLocalStorageUpdate = ({
       return;
     }
     const newComments = comments.map((comment) => {
+      if (comment.user.username === currentUser.username) return comment;
       if (comment.id === commentId) {
         comment.score += 2;
         return comment;
@@ -98,9 +100,7 @@ export const scoreCommentLocalStorageUpdate = ({
       const newComments = comments.map((comment) => {
         comment.replies.forEach((reply) => {
           if (reply.id === commentId) {
-            console.log(reply.score);
             reply.score -= 2;
-            console.log(reply.score);
             return;
           }
         });
