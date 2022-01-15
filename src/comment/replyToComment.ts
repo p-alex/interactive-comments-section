@@ -75,6 +75,7 @@ export const replyToComment = (event: Event): void => {
           replies: [],
           currentUser: data.currentUser,
           typeOfComment: "reply",
+          replyingTo: replyingTo.textContent!,
         });
         addReplyTo.appendChild(comment);
 

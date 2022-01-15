@@ -20,6 +20,7 @@ export const createCommentElement = ({
   replies,
   currentUser,
   typeOfComment,
+  replyingTo,
 }: {
   id: string;
   score: number;
@@ -30,6 +31,7 @@ export const createCommentElement = ({
   replies: replyInterface[];
   currentUser: userInterface;
   typeOfComment: "normal" | "reply";
+  replyingTo: string;
 }): HTMLDivElement => {
   const container = document.createElement("div") as HTMLDivElement;
   container.classList.add("commentBox__container");
@@ -64,7 +66,11 @@ export const createCommentElement = ({
             <div class="commentBox__btns"></div>
           </div>
           <div class="commentBox__text">
-              <p id="comment-text"></p>
+              <p>${
+                typeOfComment === "reply"
+                  ? `<span class="commentBox__replyToUser">@${replyingTo} </span>`
+                  : ""
+              }<span id="comment-text"></span></p>
           </div>
       </div>
     </div>
@@ -162,7 +168,7 @@ export const createCommentElement = ({
   }
 
   // Adding comment text using textContent for security
-  container.querySelector("#comment-text")!.textContent = content;
+  container.querySelector("#comment-text")!.textContent += content;
 
   // Adding replies if the comment has any
   if (replies.length) {
@@ -181,6 +187,7 @@ export const createCommentElement = ({
           replies: [],
           currentUser,
           typeOfComment: "reply",
+          replyingTo: reply.replyingTo,
         })
       );
     });

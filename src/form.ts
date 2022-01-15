@@ -92,6 +92,7 @@ export const addNewComment = (): void => {
       replies: [],
       currentUser: data.currentUser,
       typeOfComment: "normal",
+      replyingTo: "",
     });
     mainContainer.appendChild(comment);
 

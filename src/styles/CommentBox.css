@@ -135,6 +135,10 @@
   position: relative;
   margin-top: 15px;
 }
+.commentBox__replyToUser {
+  color: hsl(238, 40%, 52%);
+  font-weight: 700;
+}
 .commentBox__textarea {
   width: 100%;
   min-height: 100px;

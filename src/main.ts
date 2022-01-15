@@ -73,6 +73,7 @@ const appendComments = (
         replies: comment.replies,
         currentUser,
         typeOfComment: "normal",
+        replyingTo: "",
       })
     );
   });
