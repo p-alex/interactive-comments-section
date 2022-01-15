@@ -12,6 +12,15 @@ export interface commentsInterface {
   user: userInterface;
 }
 
+export interface replyInterface {
+  id: string;
+  content: string;
+  createdAt: number;
+  replyingTo: string;
+  score: number;
+  user: userInterface;
+}
+
 export interface userInterface {
   image: {
     png: string;
@@ -24,13 +33,4 @@ export interface userInterface {
 export interface scoreInterface {
   id: string;
   scoreType: "upvote" | "downvote";
-}
-
-export interface replyInterface {
-  id: string;
-  content: string;
-  createdAt: number;
-  replyingTo: string;
-  score: number;
-  user: userInterface;
 }

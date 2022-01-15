@@ -38,8 +38,6 @@ const getData = async (): Promise<void> => {
   }
 };
 
-console.log("hello");
-
 const main = (): void => {
   const data: dataInterface | null = getDataFromLocalStorage();
   if (data) {

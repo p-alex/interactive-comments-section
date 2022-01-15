@@ -61,7 +61,7 @@ export const replyToComment = (event: Event): void => {
       const replyingTo = commentContainer.querySelector(
         ".commentBox__username"
       ) as HTMLParagraphElement;
-      console.log(data.currentUser);
+
       if (textarea.value) {
         const randomId = randomIdGenerator();
 
