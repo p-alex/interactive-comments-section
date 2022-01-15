@@ -51,7 +51,11 @@ export const createCommentElement = ({
             <div class="commentBox__userDetails">
                 <img class="commentBox__profilePicture" src="${userImage}" alt="" width="35" height="35"/>
                 <div class='commentBox__usernameAndDate'>
-                  <p class="commentBox__username">${username}</p>
+                  <p class="commentBox__usernameAndBadge"><span class='commentBox__username'>${username}</span> ${
+    username === currentUser.username
+      ? "<span class='commentBox__badge'>you</span>"
+      : ""
+  }</p>
                   <p class="commentBox__commentDate">${dateConverter(
                     createdAt
                   )}</p>
