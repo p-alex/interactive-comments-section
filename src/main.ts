@@ -27,9 +27,11 @@ export const mainFormContainer = document.querySelector(
 // Getting data from data.json
 const getData = async (): Promise<void> => {
   try {
-    const response = await fetch("data.json");
-    const json: dataInterface = await response.json();
-    localStorage.setItem("data", JSON.stringify(json));
+    if (localStorage.getItem("data") === null) {
+      const response = await fetch("data.json");
+      const json: dataInterface = await response.json();
+      localStorage.setItem("data", JSON.stringify(json));
+    }
   } catch (err: any) {
     console.error(err);
     appendErrorMessage({ message: err.message });
