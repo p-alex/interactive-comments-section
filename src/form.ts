@@ -96,6 +96,11 @@ export const addNewComment = (): void => {
     });
     mainContainer.appendChild(comment);
 
+    const newCommentEditButton = comment.querySelector(
+      "#edit-btn"
+    ) as HTMLButtonElement;
+    newCommentEditButton.focus();
+
     // Reset text area
     const formTextArea = mainFormContainer.querySelector(
       ".form__text"

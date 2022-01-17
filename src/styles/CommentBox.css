@@ -28,7 +28,8 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  transition: filter 200ms ease-in-out, transform 200ms ease-in-out;
+  transition: filter 200ms ease-in-out, transform 200ms ease-in-out,
+    opacity 300ms ease-in-out;
 }
 .commentBox__rateBtn:disabled {
   cursor: not-allowed;
@@ -42,7 +43,7 @@
   border-bottom-right-radius: 10px;
 }
 .commentBox__rateBtn.btn-active {
-  filter: brightness(0.4);
+  filter: brightness(0.2);
   transform: scale(1.1);
 }
 .commentBox__likes {
@@ -137,7 +138,7 @@
 }
 .commentBox__textarea {
   width: 100%;
-  min-height: 100px;
+  min-height: 120px;
   border: solid #e8e9ed 1px;
   padding: 10px 15px;
   border-radius: 5px;

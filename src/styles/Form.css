@@ -32,10 +32,6 @@
   color: white;
   text-transform: uppercase;
   background-color: hsl(238, 40%, 52%);
-  transition: background 200ms ease-in-out;
-}
-.form__submitBtn:hover {
-  background-color: hsl(238, 53%, 59%);
 }
 @keyframes fadeIn {
   from {
