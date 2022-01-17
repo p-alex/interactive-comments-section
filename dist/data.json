@@ -1,10 +1,10 @@
 {
   "currentUser": {
     "image": {
-      "png": "./images/avatars/image-juliusomo.png",
+      "png": "./images/avatars/gandalf.png",
       "webp": "./images/avatars/image-juliusomo.webp"
     },
-    "username": "juliusomo",
+    "username": "gandalf",
     "scored": []
   },
   "comments": [
@@ -57,10 +57,10 @@
           "replyingTo": "ramsesmiron",
           "user": {
             "image": {
-              "png": "./images/avatars/image-juliusomo.png",
+              "png": "./images/avatars/gandalf.png",
               "webp": "./images/avatars/image-juliusomo.webp"
             },
-            "username": "juliusomo"
+            "username": "gandalf"
           }
         }
       ]

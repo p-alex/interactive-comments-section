@@ -5,8 +5,6 @@ import { dataInterface } from "./interfaces/index";
 import { mainContainer, mainFormContainer } from "./main";
 import { randomIdGenerator } from "./randomIdGenerator";
 
-const data: dataInterface | null = getDataFromLocalStorage()!;
-
 export const createForm = ({
   textareaPlaceholder,
   btnText,
@@ -20,10 +18,11 @@ export const createForm = ({
   cancelFunc: any;
   withCancel: boolean;
 }): Element => {
+  const data: dataInterface | null = getDataFromLocalStorage()!;
   const form = document.createElement("div") as HTMLDivElement;
   form.classList.add("form");
   form.innerHTML = `
-      <img src="./images/avatars/image-juliusomo.png" alt="" width="45" height="45" />
+      <img src="${data.currentUser.image.png}" alt="" width="45" height="45" />
       <div class="form__topFocusTrap"></div>
       <textarea class="form__text" aria-label="${textareaPlaceholder}" placeholder="${textareaPlaceholder}" id="form-content"></textarea>
       <div class="form__btnsContainer">
@@ -76,6 +75,7 @@ export const appendForm = ({
 };
 
 export const addNewComment = (): void => {
+  const data: dataInterface | null = getDataFromLocalStorage()!;
   const formContent = mainFormContainer.querySelector(
     "#form-content"
   ) as HTMLTextAreaElement;
