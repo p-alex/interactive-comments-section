@@ -9,6 +9,7 @@ export const dateConverter = (datePosted: number): string => {
   const resultInDays = diff / msInADay;
   const resultInHours = resultInDays * 24;
   const resultInMinutes = resultInHours * 60;
+  const resultInWeeks = resultInDays / 7;
   const resultInMonths = resultInDays / 30.4375;
   const resultInYears = resultInDays / 365;
 
@@ -23,9 +24,13 @@ export const dateConverter = (datePosted: number): string => {
     const convertedDate = Math.floor(resultInHours);
     return `${convertedDate} ${convertedDate === 1 ? "hour" : "hours"} ago`;
   }
-  if (resultInDays >= 1 && resultInDays < 30.4375) {
+  if (resultInDays >= 1 && resultInDays < 7) {
     const convertedDate = Math.floor(resultInDays);
     return `${convertedDate} ${convertedDate === 1 ? "day" : "days"} ago`;
+  }
+  if (resultInWeeks >= 1 && resultInWeeks < 4) {
+    const convertedDate = Math.floor(resultInWeeks);
+    return `${convertedDate} ${convertedDate === 1 ? "week" : "weeks"} ago`;
   }
   if (resultInMonths >= 1 && resultInMonths < 12) {
     const convertedDate = Math.floor(resultInMonths);
