@@ -53,11 +53,13 @@ export const createCommentElement = ({
             <div class="commentBox__userDetails">
                 <img class="commentBox__profilePicture" src="${userImage}" alt="" width="35" height="35"/>
                 <div class='commentBox__usernameAndDate'>
-                  <p class="commentBox__usernameAndBadge"><span class='commentBox__username'>${username}</span> ${
-    username === currentUser.username
-      ? "<span class='commentBox__badge'>you</span>"
-      : ""
-  }</p>
+                  <p class="commentBox__usernameAndBadge"><span class='commentBox__username'>${username}</span> 
+                    ${
+                      username === currentUser.username
+                        ? "<span class='commentBox__badge'>you</span>"
+                        : ""
+                    }
+                  </p>
                   <p class="commentBox__commentDate">${dateConverter(
                     createdAt
                   )}</p>
@@ -65,13 +67,13 @@ export const createCommentElement = ({
             </div>
             <div class="commentBox__btns"></div>
           </div>
-          <div class="commentBox__text">
-              <p>${
-                typeOfComment === "reply"
-                  ? `<span class="commentBox__replyToUser">@${replyingTo} </span>`
-                  : ""
-              }<span id="comment-text"></span></p>
-          </div>
+          <p class="commentBox__text">
+            ${
+              typeOfComment === "reply"
+                ? `<span class="commentBox__replyToUser">@${replyingTo} </span>`
+                : ""
+            }<span id="comment-text"></span>
+          </p>
       </div>
     </div>
     <div class="commentBox__replyFormContainer"></div>

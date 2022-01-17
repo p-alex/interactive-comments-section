@@ -131,10 +131,6 @@
 .commentBox__btn.fill span {
   margin: 0;
 }
-.commentBox__text {
-  position: relative;
-  margin-top: 15px;
-}
 .commentBox__replyToUser {
   color: hsl(238, 40%, 52%);
   font-weight: 700;
@@ -155,7 +151,9 @@
   color: hsl(238, 40%, 52%);
   font-weight: 700;
 }
-.commentBox__text p {
+.commentBox__text {
+  position: relative;
+  margin-top: 15px;
   color: hsl(211, 10%, 45%);
   line-height: 25px;
   flex-grow: 1;

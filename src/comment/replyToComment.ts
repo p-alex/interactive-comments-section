@@ -5,9 +5,8 @@ import { dataInterface } from "../interfaces/index";
 import { randomIdGenerator } from "../randomIdGenerator";
 import { createCommentElement } from "./commentBox";
 
-const data: dataInterface = getDataFromLocalStorage()!;
-
 export const replyToComment = (event: Event): void => {
+  const data: dataInterface = getDataFromLocalStorage()!;
   const element = <Element>event.target;
   const commentContainer =
     element!.parentElement!.parentElement!.parentElement!.parentElement!.parentElement!.closest(

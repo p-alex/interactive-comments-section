@@ -1,3 +1,4 @@
+import { dataInterface } from "../interfaces/index";
 import { getDataFromLocalStorage } from "./getDataFromLocalStorage";
 import { updateLocalStorage } from "./updateLocalStorage";
 
@@ -11,7 +12,7 @@ export const scoreCommentLocalStorageUpdate = ({
   commentId: string;
   isReply: boolean;
 }) => {
-  const data = getDataFromLocalStorage()!;
+  const data: dataInterface = getDataFromLocalStorage()!;
   const { comments, currentUser } = data;
 
   const isCommentAlreadyScored = currentUser.scored.find(
