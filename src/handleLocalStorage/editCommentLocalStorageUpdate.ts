@@ -34,7 +34,7 @@ export const editCommentLocalStorageUpdate = ({
       comments: newComments,
       currentUser: data.currentUser,
     });
-    console.log("Edited reply successfuly");
+    console.log("Edited reply successfully!");
     return;
   }
   const newComments = data.comments.map((comment) => {
@@ -45,5 +45,5 @@ export const editCommentLocalStorageUpdate = ({
     return comment;
   });
   updateLocalStorage({ comments: newComments, currentUser: data.currentUser });
-  console.log("Edited comment successfuly");
+  console.log("Edited comment successfully!");
 };

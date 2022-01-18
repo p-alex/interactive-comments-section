@@ -10,11 +10,11 @@ import { updateLocalStorage } from "./updateLocalStorage";
 export const addCommentLocalStorageUpdate = ({
   commentData,
   isReply,
-  index,
+  repliesParentId,
 }: {
   commentData: commentsInterface | replyInterface;
   isReply: boolean;
-  index: string;
+  repliesParentId: string;
 }): void => {
   const data: dataInterface = getDataFromLocalStorage()!;
 
@@ -22,7 +22,7 @@ export const addCommentLocalStorageUpdate = ({
     const newReplyData = <replyInterface>commentData;
 
     const newComments = data.comments.map((comment) => {
-      if (comment.id === index) {
+      if (comment.id === repliesParentId) {
         comment.replies.push(newReplyData);
         return comment;
       }

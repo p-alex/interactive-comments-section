@@ -14,7 +14,7 @@ export const replyToComment = (event: Event): void => {
     )!;
 
   const replyButton = commentContainer.querySelector(
-    "#reply-btn"
+    ".reply-btn"
   ) as HTMLButtonElement;
 
   const isTopLevelComment =
@@ -90,7 +90,7 @@ export const replyToComment = (event: Event): void => {
         addCommentLocalStorageUpdate({
           commentData: newReplyData,
           isReply: true,
-          index: replyParent!.getAttribute("id")!,
+          repliesParentId: replyParent!.getAttribute("id")!,
         });
         form.remove();
       }

@@ -22,7 +22,7 @@ export const createForm = ({
   const form = document.createElement("div") as HTMLDivElement;
   form.classList.add("form");
   form.innerHTML = `
-      <img src="${data.currentUser.image.png}" alt="" width="45" height="45" />
+      <img src="${data.currentUser.image.png}" alt="${data.currentUser.username}" width="45" height="45" />
       <div class="form__topFocusTrap"></div>
       <textarea class="form__text" aria-label="${textareaPlaceholder}" placeholder="${textareaPlaceholder}" id="form-content"></textarea>
       <div class="form__btnsContainer">
@@ -94,10 +94,11 @@ export const addNewComment = (): void => {
       typeOfComment: "normal",
       replyingTo: "",
     });
+
     mainContainer.appendChild(comment);
 
     const newCommentEditButton = comment.querySelector(
-      "#edit-btn"
+      ".edit-btn"
     ) as HTMLButtonElement;
     newCommentEditButton.focus();
 
@@ -106,6 +107,7 @@ export const addNewComment = (): void => {
       ".form__text"
     ) as HTMLTextAreaElement;
 
+    // Add comment to local storage
     const newCommentData = {
       id: randomId,
       content: formContent.value,
@@ -118,7 +120,7 @@ export const addNewComment = (): void => {
     addCommentLocalStorageUpdate({
       commentData: newCommentData,
       isReply: false,
-      index: "",
+      repliesParentId: "",
     });
 
     formTextArea.value = "";

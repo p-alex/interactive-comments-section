@@ -39,7 +39,7 @@ const cancelEditMode = (
   commentText: HTMLParagraphElement
 ) => {
   const editBtn = currentComment?.querySelector(
-    "#edit-btn"
+    ".edit-btn"
   ) as HTMLButtonElement;
 
   editForm.remove();
@@ -119,7 +119,6 @@ const createEditForm = (
       withIcon: false,
       btnStyle: "normal",
     });
-    cancelBtn.classList.add("cancel-btn");
     cancelBtn.classList.add("cancel-btn");
     editModeBtnsContainer.appendChild(updateBtn);
     editModeBtnsContainer.appendChild(cancelBtn);

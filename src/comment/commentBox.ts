@@ -40,18 +40,18 @@ export const createCommentElement = ({
   const template = `
     <div class="commentBox">
       <div class="commentBox__rate">
-          <button class="commentBox__rateBtn" id="upvote-btn" aria-label="Upvote comment">
-            <img src="./images/icon-plus.svg" alt="" width='10' height='10'/>
+          <button class="commentBox__rateBtn upvote-btn" aria-label="Upvote comment">
+            <img src="./images/icon-plus.svg" alt="" width='10' height='10' alt=''/>
           </button>
           <p class="commentBox__likes">${score}</p>
-          <button class="commentBox__rateBtn" id="downvote-btn" aria-label="Downvote comment">
-            <img src="./images/icon-minus.svg" alt="" width='10' height='3' />
+          <button class="commentBox__rateBtn downvote-btn" aria-label="Downvote comment">
+            <img src="./images/icon-minus.svg" alt="" width='10' height='3' alt=''/>
           </button>
       </div>
       <div class="commentBox__body">
           <div class="commentBox__topBar">
             <div class="commentBox__userDetails">
-                <img class="commentBox__profilePicture" src="${userImage}" alt="" width="35" height="35"/>
+                <img class="commentBox__profilePicture" src="${userImage}" alt="${username}" width="35" height="35"/>
                 <div class='commentBox__usernameAndDate'>
                   <p class="commentBox__usernameAndBadge"><span class='commentBox__username'>${username}</span> 
                     ${
@@ -90,11 +90,11 @@ export const createCommentElement = ({
   ) as HTMLDivElement;
 
   const upvoteBtn = rateContainer?.querySelector(
-    `#upvote-btn`
+    `.upvote-btn`
   ) as HTMLButtonElement;
 
   const downvoteBtn = rateContainer.querySelector(
-    `#downvote-btn`
+    `.downvote-btn`
   ) as HTMLButtonElement;
 
   const scoreParagraph = rateContainer.querySelector(
@@ -211,11 +211,12 @@ export const createButton = ({
   const button = document.createElement("button") as HTMLButtonElement;
   button.classList.add("commentBox__btn");
 
+  button.classList.add(`${text.toLowerCase()}-btn`);
+
   // Applying button style
   button.classList.add(btnStyle === "fill" ? "fill" : "normal");
-  if (text === "Delete") button.classList.add("delete-btn");
+
   button.title = text;
-  button.id = `${text.toLowerCase()}-btn`;
 
   // Add icon if true
   if (withIcon) {
